@@ -1,0 +1,14 @@
+# Claude Code internal state
+.claude/
+
+# macOS
+.DS_Store
+
+# Python (in case any notebook work happens later)
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Editor
+.vscode/
+.idea/
