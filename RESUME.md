@@ -6,55 +6,59 @@ This document is the bootstrap for a fresh Claude conversation. It exists becaus
 
 ---
 
-## 🟢 PRE-COMPACTION STATE — captured 2026-05-30 23:15 (READ THIS FIRST)
+## 🟢 CURRENT STATE — last updated 2026-05-31 end of Day 2 (READ THIS FIRST)
 
-This is the freshest state info, captured immediately before Pranav compacted context. Trust this over any older claims in this doc if they conflict.
+This is the freshest state info. Trust this over any older claims in this doc if they conflict.
 
 ### Git state
-- **PR #1 is MERGED.** Squash-merged to `main`. Day 1 work landed.
-- **Local `research` branch has 4 STAGED files** (uncommitted) — these are the post-PR doc updates (LEARNINGS.md Part 8, RESUME.md Appendix, CLAUDE.md GitHub section, session log Day-1 close). Do NOT lose them. Run `git status` to verify they're still staged. If they show as "modified" not "staged", re-stage them.
-- Branch convention: **single rolling `research` branch** (no per-day branches). All PRs come from `research`.
+- **PR #1 (Day 1) is MERGED** to `main`. Day 1 work landed.
+- **PR #2 (Day 2) is OPEN** at https://github.com/DaiSwap/nefarious/pull/2 — Pranav to squash-merge.
+- Working tree clean. `research` in sync with `origin/research` at commit `efcb33e`.
+- Branch convention: **single rolling `research` branch**. All PRs come from `research`.
 - Merge convention: **squash and merge** (not rebase). Each PR = 1 commit on `main`.
 
-### Immediate next task — TAKE THIS ON IMMEDIATELY, do not wait
+### Cycle A progress
+- A.1 Research → A.2 Pranav picks → A.3 Math v0.1 → A.4 Test (Asian Paints + Tata Steel) → **A.5 Multi-agent critique**: all ✅ done.
+- **A.6 (refine v0.1 → v0.2 math + idea-review check)**: ⏳ NEXT — but BLOCKED on Pranav's answers to 8 open questions (see below).
 
-**Pranav's directive (recorded 2026-05-30): "immediately take on A.5 planning and execution".**
+### IMPORTANT — Don't start A.6 without Pranav's answers
 
-Sequence to run as soon as you've finished reading the resume files:
+The A.5 synthesizer left 8 open questions in `15_cycle_A_critiques_v0.1.md` §8 (tabulated also in `problem_statement_dump_2.md` §11). Defaults exist; Pranav must confirm:
 
-1. **PLAN A.5 first** — write a detailed plan (lenses, agent prompts, output structure) to `market_research/A5_plan.md`. This is the planning step, not execution.
-2. **Show Pranav the plan briefly** (one paragraph + the lens list) — this is a quick confirmation, not an extended back-and-forth. If Pranav doesn't push back within his next message, **proceed to execution**.
-3. **Execute A.5** — spawn 4 critic agents in parallel (background mode + checkpoint protocol per §6), then 1 synthesizer after they finish. Output: `market_research/15_cycle_A_critiques_v0.1.md`.
-4. **Bundle commit** — after A.5 lands, commit ALL changes together (the 4 already-staged Day-1-close docs + A5_plan.md + 15_cycle_A_critiques_v0.1.md).
-5. **Push and open PR #2** for Pranav to merge.
+| Q | Decision | Synthesizer's default |
+|---|---|---|
+| Q1 | Beneish gate design — two-stage / additive / two-period? | Two-stage conditional halt |
+| Q2 | Cyclical tag list breadth — narrow / broader / broadest? | Broader (incl. housing/auto/construction) |
+| Q3 | Altman Z″ replacement — X2_current only / composite only / both? | Both |
+| Q4 | BFSI stub format — qualitative / quantitative / defer? | Quantitative with disclaimer |
+| Q5 | PSU gate — exclude / annotate / partial sub-pipeline? | Partial sub-pipeline |
+| Q6 | AFFIRM 5th label — add / keep 4? | Keep 4 for v0.2 |
+| Q7 *(v0.4)* | Add BFSI staging sentence to problem statement? | YES |
+| Q8 *(v0.4)* | Add cadence clarification to Q9? | NO — math handles it |
 
-Do not stall at any of these steps. Pranav wants execution, not deliberation. Plan = a written document; execution = agent spawns. Both happen in this session.
+### What to do at the start of your next session
 
-### What Pranav explicitly wants from this session
-- **"Do this properly"** — plan in writing first, but don't pad the planning step. Tight plan, then go.
-- **Immediate execution after planning** — don't ask "shall I proceed?". Just proceed unless Pranav has pushed back.
-- **Commit everything together after A.5 is done** — single bundled commit for PR #2.
+1. Read the rest of this file (§1–§10 below) + the 8 files in §2.
+2. Run `TaskList` — verify A.5 (#20) is **completed**; A.6 (#21) is **pending**.
+3. Check Pranav's most recent message: has he answered Q1–Q8?
+   - **If YES**: write `16_cycle_A_math_v0.2.md` directly. No agent needed — prescriptions are already explicit in `15_cycle_A_critiques_v0.1.md` §6. Optional: re-test on Asian Paints + Tata Steel before closing Cycle A.
+   - **If NO**: greet Pranav with current state and the Q1–Q8 table. Wait for answers.
 
-### Don't do these
-- Don't spawn agents during the planning phase. Plan is a written document, not action.
-- Don't commit the 4 staged files standalone. Wait until A.5 output is ready, then bundle.
-- Don't escalate any version to v1.X. Stay in v0.X.
-- Don't touch implementation (no code, no architecture, no UX specs). Just math + critique + refine.
+### What NOT to do
+- Don't write A.6 math without Q1–Q6 answers. (Q7–Q8 are v0.4 problem-statement edits; can be deferred.)
+- Don't auto-merge PR #2. Pranav merges manually.
+- Don't escalate any version to v1.X. Stay v0.X.
+- Don't touch implementation (no code, no architecture, no UX specs).
+- Don't make A.6 a multi-agent process — synthesizer already specified prescriptions; A.6 is a single careful write.
 
-### Lenses I had in mind for A.5 (for reference; Pranav will confirm)
-- **Quant** — Beneish coefficient sensitivity, Piotroski cyclical inversion, Z″ for old firms
-- **Forensic accountant** — regime-shift false positives, Ind AS 116 transitions, restatement handling
-- **Behavioral** — do action labels invite harmful action?
-- **Retail user** — are action labels actually actionable?
-- Possibly **NSE-specific** as a 5th lens (small sectors, BFSI silent skip)
-- Plus **1 synthesizer agent** at the end → `15_cycle_A_critiques_v0.1.md`
-
-These are not locked. Pranav may modify during planning.
+### After A.6 closes Cycle A
+- If Q7 = YES: draft `v0.4` of the problem statement (add one BFSI-staging-clarification sentence) before starting Cycle B.
+- **Cycle B (Equity TA)** is next — same 6-step pattern as Cycle A. Will need fresh A.1-style research first.
 
 ### Recovery if anything's broken
-- If staged files are gone: check `git stash list`, `git reflog`, and `git status`. The modifications are tracked.
+- If `16_cycle_A_math_v0.2.md` already exists when you check (partial): read it first; assume a previous Claude crashed mid-write and continue from where it left off rather than starting fresh.
 - If git push fails: see `LEARNINGS.md` §8.2 — credential helper troubleshooting.
-- If a previous Claude already started A.5: check `market_research/15_cycle_A_critiques_v0.1.md` for partial output before spawning new agents.
+- If anything else: check `LEARNINGS.md` Part 3 (mistakes M1–M5) for the patterns to avoid.
 
 ---
 
@@ -92,8 +96,8 @@ Optional / deeper reading (don't need at start, useful for specific questions):
 | 17 | A.2 Pranav picks | ✅ completed |
 | 18 | A.3 Write FA math v0.1 | ✅ completed |
 | 19 | A.4 Test FA math v0.1 | ✅ completed |
-| **20** | **A.5 Multi-agent critique** | ⏳ **NEXT** |
-| 21 | A.6 Refine to v0.2 + idea review | pending |
+| 20 | A.5 Multi-agent critique | ✅ completed |
+| **21** | **A.6 Refine to v0.2 + idea review** | ⏳ **NEXT** (blocked on Pranav's Q1–Q8 answers) |
 | 22 | Cycle B header (Equity TA) | pending |
 | 23 | Cycle C header (MF analytics) | pending |
 | 24 | Cycle D header (Portfolio construction) | pending |
@@ -104,15 +108,20 @@ Optional / deeper reading (don't need at start, useful for specific questions):
 
 ## 4. The immediate next step
 
-**A.5 — Multi-agent critique of v0.1 math + test results.**
+**A.6 — Refine FA math v0.1 → v0.2, plus idea-review check (does v0.3 → v0.4?).**
 
-Plan:
-- Spawn ~4–5 agents in parallel, each from a distinct lens, to attack `11_cycle_A_math_v0.1.md` and the test results in `12_`, `13_`, `14_`.
-- Proposed lenses: **quant** (focus on Beneish coefficient sensitivity, Piotroski cyclical inversion, Z″ for old firms) / **forensic accountant** (regime-shift false positives, Ind AS 116 transitions) / **behavioral** (whether the action labels invite harmful action) / **retail user** (whether the labels are actionable) / **NSE-specific** (small sectors, BFSI silent skip).
-- One synthesizer agent at the end consolidates into `15_cycle_A_critiques_v0.1.md`.
-- **Use the checkpoint protocol** for any agent > 5 min (see §6 below).
+Inputs:
+- `15_cycle_A_critiques_v0.1.md` — A.5 synthesizer output with concrete v0.2 prescriptions in §6
+- `11_cycle_A_math_v0.1.md` — the math being refactored
 
-Do NOT spawn anything until Pranav says go. Show prompts before spawning if asked.
+Steps:
+1. **Get Pranav's answers to Q1–Q8** (see top "CURRENT STATE" section). Do not start writing without Q1–Q6 at minimum.
+2. **Write `16_cycle_A_math_v0.2.md`** directly. No agent. Prescriptions in §6 of the critique synthesis are explicit enough.
+3. **Optional**: re-test the v0.2 math on Asian Paints + Tata Steel to verify the fixes don't break what worked. If you do this, use the checkpoint protocol (§6).
+4. **If Q7 = YES**: draft `17_decisions_locked_v0.4.md` with the BFSI staging clarification sentence added to v0.3.
+5. **Bundle commit + PR #3** after A.6 lands.
+
+Do NOT make A.6 a multi-agent process. The synthesizer already produced specific prescriptions; A.6 is a careful single write that integrates them.
 
 ## 5. Working principles — non-negotiable
 

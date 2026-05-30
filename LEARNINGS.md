@@ -305,4 +305,72 @@ __pycache__/, *.pyc       # Python (future)
 
 ---
 
-**End of LEARNINGS.md v1.1 (updated with Part 8).** Next update: end of Cycle A.
+### 8.7 Post-squash-merge rebase routine — MANDATORY after every merged PR
+
+**The problem (surfaced after PR #2 was opened)**:
+
+After PR #1 was squash-merged into `main`, PR #2 immediately showed conflicts (`mergeable: CONFLICTING`, `mergeStateStatus: DIRTY`) even though Day 2 work was a clean linear extension of Day 1.
+
+Cause: squash-merge creates a brand-new commit on `main` containing all the merged changes, but our local `research` branch still has the **original** pre-squash commit underneath any new work. The two histories share only the initial-commit ancestor; the same files modified on both sides look like a conflict to GitHub.
+
+Visual:
+
+```
+                          ┌─ <squash_sha>  PR #N merged into main
+e99713f (initial) ───────┤
+                          └─ <orig_sha> ──▶ <new_work_sha>  research
+                              (PR #N's      (PR #N+1's
+                               original)     new commits)
+```
+
+**The fix** — rebase `research` onto `origin/main` immediately after each PR is merged:
+
+```bash
+# 1. Update origin refs
+git fetch origin
+
+# 2. If there's uncommitted work, park it
+git stash push -m "<short description>"
+
+# 3. Rebase research onto the new main
+git rebase origin/main
+
+# 4. Force-push (use --force-with-lease, not --force)
+git push --force-with-lease origin research
+
+# 5. Restore any parked work
+git stash pop
+```
+
+**Why rebase works cleanly**:
+- Git detects that the pre-squash commit on `research` is equivalent to the squash commit on `main` (it auto-detects "previously applied" patches and skips them — you'll see `warning: skipped previously applied commit <sha>`).
+- Only the post-squash commits (the new work) get replayed onto `main`.
+- Result: linear history where `research = main + new_work`. PR #N+1 diff now shows only the new work.
+
+**Force-push safety**:
+- `--force-with-lease` refuses to push if `origin/research` has changed since your last `git fetch`. This protects against overwriting concurrent work (e.g., another collaborator's commit).
+- `--force` (no lease) is dangerous. Never use it on `research` unless you have explicit confirmation.
+- **NEVER force-push to `main`** under any circumstance. System rule + project rule.
+
+**The routine — committed**:
+
+After EVERY squash-merged PR, before starting new work:
+1. `git fetch origin`
+2. `git rebase origin/main`
+3. `git push --force-with-lease origin research`
+
+This keeps `research` always one PR ahead of `main`, with clean linear history. If we ever forget this routine, the next PR will conflict.
+
+**What NOT to do**:
+- ❌ Don't merge `main` into `research` — produces ugly merge commits, defeats the squash-merge purpose.
+- ❌ Don't `git reset --hard origin/main` without first verifying you've cherry-picked your post-merge commits — loses work irreversibly.
+- ❌ Don't force-push to `main` ever (system rule).
+- ❌ Don't skip the rebase — every subsequent PR will conflict and need manual resolution.
+- ❌ Don't rebase mid-work if uncommitted edits exist; stash first.
+
+**When NOT to use rebase + force-push**:
+- If `research` has collaborators (multiple humans/agents pushing to it). For a solo project this is safe; for a team you'd need coordination.
+
+---
+
+**End of LEARNINGS.md v1.2 (updated with Part 8 §8.7).** Next update: end of Cycle A.
