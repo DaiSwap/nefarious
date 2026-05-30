@@ -223,3 +223,86 @@ These are not blockers; they're context for future decisions.
 ---
 
 **End of LEARNINGS.md v1.** Next update: end of Cycle A (after A.5 and A.6 are done).
+
+---
+
+## Part 8 — Git / GitHub setup (added end of Day 1)
+
+After completing the test synthesis and documentation pass, Pranav requested the project be pushed to GitHub at https://github.com/DaiSwap/nefarious.
+
+### 8.1 The two-account problem
+
+Pranav has two GitHub accounts on this Mac:
+- **`peeveeee`** — his personal/other identity, credentials cached in macOS Keychain (used by git's default credential helper for github.com)
+- **`DaiSwap`** — the account owning `DaiSwap/nefarious` (this project's home)
+
+When `gh auth login` authenticated as DaiSwap, `gh` had the right token, but `git push` still used macOS Keychain (peeveeee) → 403 Permission denied.
+
+### 8.2 The solution: repo-local credential helper
+
+We set up the credential helper **only in this repo's `.git/config`** — global config and Keychain entries untouched:
+
+```bash
+git config --local credential.helper ""
+git config --local --add credential.helper "!gh auth git-credential"
+```
+
+After this:
+- `~/.gitconfig` (global) — untouched
+- macOS Keychain — untouched
+- This repo's `.git/config` — has `credential.helper = !gh auth git-credential`
+- Any other repo on this Mac — uses default helper (peeveeee)
+- This repo only — uses `gh` (DaiSwap)
+
+**Reversible**: `git config --local --unset-all credential.helper` removes it.
+
+**Caveat**: if a second account is added to `gh` later (`gh auth login` for peeveeee in gh too), `gh auth git-credential` picks by URL match. Should still resolve to DaiSwap for `DaiSwap/nefarious`, but worth watching.
+
+### 8.3 Daily push workflow (committed pattern)
+
+For ongoing daily pushes:
+
+```bash
+# Work as normal in /Users/pranavvenkatesh/analytics/nefarious
+# At end of day:
+git checkout research              # or current working branch
+git add market_research/<new-files>  # by name, not `git add .` (safety)
+git commit -m "Day N: <summary>"
+git push                           # works because of repo-local credential helper
+```
+
+Two cadence options:
+- **Single rolling `research` branch** — daily commits stack on it; one long-running PR (or merge daily)
+- **One branch per day** — `research/day-N`; one PR per day; cleaner history
+
+Decision deferred to Pranav's preference once Day 2 begins.
+
+### 8.4 What's in PR #1 (Day 1)
+
+- PR: **https://github.com/DaiSwap/nefarious/pull/1**
+- Branch: `research`
+- Base: `main`
+- Files: 22 (entire `market_research/` + `LEARNINGS.md` + `RESUME.md` + `instruction.txt` + `.gitignore`)
+- Status: open, Pranav to merge
+
+### 8.5 What's in `.gitignore` (initial)
+
+```
+.claude/                  # Claude Code internal state
+.DS_Store                 # macOS
+__pycache__/, *.pyc       # Python (future)
+.ipynb_checkpoints/       # Jupyter (future)
+.vscode/, .idea/          # editors
+```
+
+### 8.6 Lessons codified
+
+- **Two-account GitHub setups need repo-local credential helpers.** Global `gh auth setup-git` would override the other account.
+- **`gh auth git-credential` is a clean credential source** when gh is already authenticated. No PAT needed, no Keychain entry, nothing to leak.
+- **Always do `git config --local`, not `git config --global`** for repo-specific identity / credential setup.
+- **Before pushing, run `gh api repos/<owner>/<repo>` to inspect remote state.** Knowing what's already on the remote (just LICENSE in our case) prevents conflicts.
+- **Stage files by name (`git add market_research/`) not `git add .`** — avoids accidentally adding `.claude/` or sensitive files.
+
+---
+
+**End of LEARNINGS.md v1.1 (updated with Part 8).** Next update: end of Cycle A.

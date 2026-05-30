@@ -6,6 +6,58 @@ This document is the bootstrap for a fresh Claude conversation. It exists becaus
 
 ---
 
+## 🟢 PRE-COMPACTION STATE — captured 2026-05-30 23:15 (READ THIS FIRST)
+
+This is the freshest state info, captured immediately before Pranav compacted context. Trust this over any older claims in this doc if they conflict.
+
+### Git state
+- **PR #1 is MERGED.** Squash-merged to `main`. Day 1 work landed.
+- **Local `research` branch has 4 STAGED files** (uncommitted) — these are the post-PR doc updates (LEARNINGS.md Part 8, RESUME.md Appendix, CLAUDE.md GitHub section, session log Day-1 close). Do NOT lose them. Run `git status` to verify they're still staged. If they show as "modified" not "staged", re-stage them.
+- Branch convention: **single rolling `research` branch** (no per-day branches). All PRs come from `research`.
+- Merge convention: **squash and merge** (not rebase). Each PR = 1 commit on `main`.
+
+### Immediate next task — TAKE THIS ON IMMEDIATELY, do not wait
+
+**Pranav's directive (recorded 2026-05-30): "immediately take on A.5 planning and execution".**
+
+Sequence to run as soon as you've finished reading the resume files:
+
+1. **PLAN A.5 first** — write a detailed plan (lenses, agent prompts, output structure) to `market_research/A5_plan.md`. This is the planning step, not execution.
+2. **Show Pranav the plan briefly** (one paragraph + the lens list) — this is a quick confirmation, not an extended back-and-forth. If Pranav doesn't push back within his next message, **proceed to execution**.
+3. **Execute A.5** — spawn 4 critic agents in parallel (background mode + checkpoint protocol per §6), then 1 synthesizer after they finish. Output: `market_research/15_cycle_A_critiques_v0.1.md`.
+4. **Bundle commit** — after A.5 lands, commit ALL changes together (the 4 already-staged Day-1-close docs + A5_plan.md + 15_cycle_A_critiques_v0.1.md).
+5. **Push and open PR #2** for Pranav to merge.
+
+Do not stall at any of these steps. Pranav wants execution, not deliberation. Plan = a written document; execution = agent spawns. Both happen in this session.
+
+### What Pranav explicitly wants from this session
+- **"Do this properly"** — plan in writing first, but don't pad the planning step. Tight plan, then go.
+- **Immediate execution after planning** — don't ask "shall I proceed?". Just proceed unless Pranav has pushed back.
+- **Commit everything together after A.5 is done** — single bundled commit for PR #2.
+
+### Don't do these
+- Don't spawn agents during the planning phase. Plan is a written document, not action.
+- Don't commit the 4 staged files standalone. Wait until A.5 output is ready, then bundle.
+- Don't escalate any version to v1.X. Stay in v0.X.
+- Don't touch implementation (no code, no architecture, no UX specs). Just math + critique + refine.
+
+### Lenses I had in mind for A.5 (for reference; Pranav will confirm)
+- **Quant** — Beneish coefficient sensitivity, Piotroski cyclical inversion, Z″ for old firms
+- **Forensic accountant** — regime-shift false positives, Ind AS 116 transitions, restatement handling
+- **Behavioral** — do action labels invite harmful action?
+- **Retail user** — are action labels actually actionable?
+- Possibly **NSE-specific** as a 5th lens (small sectors, BFSI silent skip)
+- Plus **1 synthesizer agent** at the end → `15_cycle_A_critiques_v0.1.md`
+
+These are not locked. Pranav may modify during planning.
+
+### Recovery if anything's broken
+- If staged files are gone: check `git stash list`, `git reflog`, and `git status`. The modifications are tracked.
+- If git push fails: see `LEARNINGS.md` §8.2 — credential helper troubleshooting.
+- If a previous Claude already started A.5: check `market_research/15_cycle_A_critiques_v0.1.md` for partial output before spawning new agents.
+
+---
+
 ## 1. The 60-second orientation
 
 - **Project**: "Nefarious" — an AI investment-planning bot for Pranav Venkatesh (Indian retail investor, NSE equities + Mutual Funds).
@@ -136,5 +188,55 @@ That's it. Don't add anything else. The doc handles the rest.
 
 ---
 
-**Last updated**: 2026-05-30 (end of Day 1)
+**Last updated**: 2026-05-30 (end of Day 1, post-PR)
 **Next update**: When Cycle A closes (after A.5 + A.6), or whenever significant state changes.
+
+---
+
+## Appendix — Git / GitHub state (added end of Day 1)
+
+The project is pushed to GitHub. The post-compression Claude should know this.
+
+- **Remote**: `https://github.com/DaiSwap/nefarious`
+- **Default branch**: `main` (contains only LICENSE)
+- **Working branch**: `research` (Day 1 work pushed here)
+- **Day 1 PR**: https://github.com/DaiSwap/nefarious/pull/1 — open, awaiting Pranav's merge
+
+### Credential setup (don't touch)
+
+A repo-local credential helper is configured in `.git/config`:
+```
+credential.helper = !gh auth git-credential
+```
+
+This routes credentials only for THIS repo through `gh` (logged in as `DaiSwap`). Pranav's other account `peeveeee` (used elsewhere on this Mac via macOS Keychain) is NOT affected.
+
+**Do NOT** run `gh auth setup-git` (it would route ALL github.com through gh globally — disrupts peeveeee).
+
+**Do NOT** add credentials to global git config or modify Keychain.
+
+If a daily push fails with 403 / permission denied:
+1. Run `git config --local --get-all credential.helper` — confirm `!gh auth git-credential` is present
+2. Run `gh auth status` — confirm `gh` is still logged in as DaiSwap
+3. If gh expired, run `gh auth login` interactively (Pranav must do this)
+
+### Daily push workflow
+
+From `/Users/pranavvenkatesh/analytics/nefarious/`:
+
+```bash
+git checkout research              # or current branch
+git add <specific files>           # by name; avoid `git add .` for safety
+git commit -m "Day N: <summary>"
+git push                           # works via repo-local helper
+```
+
+Two cadence options Pranav hasn't picked yet:
+- (a) Single rolling `research` branch — daily commits stack
+- (b) Branch per day (`research/day-N`) — one PR per day
+
+If you create a new branch, you don't need to repeat the credential setup — it's on `.git/config` of the repo, applies to all branches.
+
+### Reading the repo on GitHub
+
+If reading the project ON GitHub (not from local filesystem), the file structure is the same as listed in §2 above. All paths are repo-relative (e.g., `LEARNINGS.md`, `market_research/CLAUDE.md`).

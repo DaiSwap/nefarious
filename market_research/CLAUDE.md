@@ -110,3 +110,22 @@ Short version (Cycle A A.4 findings):
 - **Cycle A.5 — Multi-agent critique** of the v0.1 math + Asian Paints + Tata Steel test results. Will attack the 6 structural weaknesses from distinct lenses (quant, forensic accountant, behavioral, retail user, NSE-specific). Output: `15_cycle_A_critiques_v0.1.md`.
 - **Cycle A.6 — Refine to v0.2** + check whether anything in A.5 / A.4 demands a problem-statement update (v0.3 → v0.4). Output: `16_cycle_A_math_v0.2.md`.
 - Then close Cycle A; begin Cycle B (Equity TA).
+
+## GitHub repo
+
+- **Remote**: https://github.com/DaiSwap/nefarious
+- **Default branch**: `main` (contains only LICENSE)
+- **Working branch**: `research` (Day 1 work, tracks `origin/research`)
+- **Day 1 PR**: https://github.com/DaiSwap/nefarious/pull/1 (open)
+- **Credential setup**: repo-local helper using `gh` (logged in as DaiSwap). Global git config + macOS Keychain (`peeveeee` setup) untouched. See `LEARNINGS.md` Part 8 for details.
+- **Daily push workflow**: see `LEARNINGS.md` §8.3. Standard `git add <files> / commit / push` from this folder works because the repo-local credential helper resolves to DaiSwap automatically.
+
+## Resume protocol
+
+If context is cleared mid-project, paste this prompt into a fresh Claude:
+
+```
+Read /Users/pranavvenkatesh/analytics/nefarious/RESUME.md fully, then follow its §8 instructions. Do not skip steps. Reply only after reading all files in §2.
+```
+
+`RESUME.md` lists the 8 files to read in priority order, current task state, immediate next step, working principles, the checkpoint protocol, and 5 named mistakes to avoid.
