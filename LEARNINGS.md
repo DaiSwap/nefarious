@@ -223,3 +223,154 @@ These are not blockers; they're context for future decisions.
 ---
 
 **End of LEARNINGS.md v1.** Next update: end of Cycle A (after A.5 and A.6 are done).
+
+---
+
+## Part 8 — Git / GitHub setup (added end of Day 1)
+
+After completing the test synthesis and documentation pass, Pranav requested the project be pushed to GitHub at https://github.com/DaiSwap/nefarious.
+
+### 8.1 The two-account problem
+
+Pranav has two GitHub accounts on this Mac:
+- **`peeveeee`** — his personal/other identity, credentials cached in macOS Keychain (used by git's default credential helper for github.com)
+- **`DaiSwap`** — the account owning `DaiSwap/nefarious` (this project's home)
+
+When `gh auth login` authenticated as DaiSwap, `gh` had the right token, but `git push` still used macOS Keychain (peeveeee) → 403 Permission denied.
+
+### 8.2 The solution: repo-local credential helper
+
+We set up the credential helper **only in this repo's `.git/config`** — global config and Keychain entries untouched:
+
+```bash
+git config --local credential.helper ""
+git config --local --add credential.helper "!gh auth git-credential"
+```
+
+After this:
+- `~/.gitconfig` (global) — untouched
+- macOS Keychain — untouched
+- This repo's `.git/config` — has `credential.helper = !gh auth git-credential`
+- Any other repo on this Mac — uses default helper (peeveeee)
+- This repo only — uses `gh` (DaiSwap)
+
+**Reversible**: `git config --local --unset-all credential.helper` removes it.
+
+**Caveat**: if a second account is added to `gh` later (`gh auth login` for peeveeee in gh too), `gh auth git-credential` picks by URL match. Should still resolve to DaiSwap for `DaiSwap/nefarious`, but worth watching.
+
+### 8.3 Daily push workflow (committed pattern)
+
+For ongoing daily pushes:
+
+```bash
+# Work as normal in /Users/pranavvenkatesh/analytics/nefarious
+# At end of day:
+git checkout research              # or current working branch
+git add market_research/<new-files>  # by name, not `git add .` (safety)
+git commit -m "Day N: <summary>"
+git push                           # works because of repo-local credential helper
+```
+
+Two cadence options:
+- **Single rolling `research` branch** — daily commits stack on it; one long-running PR (or merge daily)
+- **One branch per day** — `research/day-N`; one PR per day; cleaner history
+
+Decision deferred to Pranav's preference once Day 2 begins.
+
+### 8.4 What's in PR #1 (Day 1)
+
+- PR: **https://github.com/DaiSwap/nefarious/pull/1**
+- Branch: `research`
+- Base: `main`
+- Files: 22 (entire `market_research/` + `LEARNINGS.md` + `RESUME.md` + `instruction.txt` + `.gitignore`)
+- Status: open, Pranav to merge
+
+### 8.5 What's in `.gitignore` (initial)
+
+```
+.claude/                  # Claude Code internal state
+.DS_Store                 # macOS
+__pycache__/, *.pyc       # Python (future)
+.ipynb_checkpoints/       # Jupyter (future)
+.vscode/, .idea/          # editors
+```
+
+### 8.6 Lessons codified
+
+- **Two-account GitHub setups need repo-local credential helpers.** Global `gh auth setup-git` would override the other account.
+- **`gh auth git-credential` is a clean credential source** when gh is already authenticated. No PAT needed, no Keychain entry, nothing to leak.
+- **Always do `git config --local`, not `git config --global`** for repo-specific identity / credential setup.
+- **Before pushing, run `gh api repos/<owner>/<repo>` to inspect remote state.** Knowing what's already on the remote (just LICENSE in our case) prevents conflicts.
+- **Stage files by name (`git add market_research/`) not `git add .`** — avoids accidentally adding `.claude/` or sensitive files.
+
+---
+
+### 8.7 Post-squash-merge rebase routine — MANDATORY after every merged PR
+
+**The problem (surfaced after PR #2 was opened)**:
+
+After PR #1 was squash-merged into `main`, PR #2 immediately showed conflicts (`mergeable: CONFLICTING`, `mergeStateStatus: DIRTY`) even though Day 2 work was a clean linear extension of Day 1.
+
+Cause: squash-merge creates a brand-new commit on `main` containing all the merged changes, but our local `research` branch still has the **original** pre-squash commit underneath any new work. The two histories share only the initial-commit ancestor; the same files modified on both sides look like a conflict to GitHub.
+
+Visual:
+
+```
+                          ┌─ <squash_sha>  PR #N merged into main
+e99713f (initial) ───────┤
+                          └─ <orig_sha> ──▶ <new_work_sha>  research
+                              (PR #N's      (PR #N+1's
+                               original)     new commits)
+```
+
+**The fix** — rebase `research` onto `origin/main` immediately after each PR is merged:
+
+```bash
+# 1. Update origin refs
+git fetch origin
+
+# 2. If there's uncommitted work, park it
+git stash push -m "<short description>"
+
+# 3. Rebase research onto the new main
+git rebase origin/main
+
+# 4. Force-push (use --force-with-lease, not --force)
+git push --force-with-lease origin research
+
+# 5. Restore any parked work
+git stash pop
+```
+
+**Why rebase works cleanly**:
+- Git detects that the pre-squash commit on `research` is equivalent to the squash commit on `main` (it auto-detects "previously applied" patches and skips them — you'll see `warning: skipped previously applied commit <sha>`).
+- Only the post-squash commits (the new work) get replayed onto `main`.
+- Result: linear history where `research = main + new_work`. PR #N+1 diff now shows only the new work.
+
+**Force-push safety**:
+- `--force-with-lease` refuses to push if `origin/research` has changed since your last `git fetch`. This protects against overwriting concurrent work (e.g., another collaborator's commit).
+- `--force` (no lease) is dangerous. Never use it on `research` unless you have explicit confirmation.
+- **NEVER force-push to `main`** under any circumstance. System rule + project rule.
+
+**The routine — committed**:
+
+After EVERY squash-merged PR, before starting new work:
+1. `git fetch origin`
+2. `git rebase origin/main`
+3. `git push --force-with-lease origin research`
+
+This keeps `research` always one PR ahead of `main`, with clean linear history. If we ever forget this routine, the next PR will conflict.
+
+**What NOT to do**:
+- ❌ Don't merge `main` into `research` — produces ugly merge commits, defeats the squash-merge purpose.
+- ❌ Don't `git reset --hard origin/main` without first verifying you've cherry-picked your post-merge commits — loses work irreversibly.
+- ❌ Don't force-push to `main` ever (system rule).
+- ❌ Don't skip the rebase — every subsequent PR will conflict and need manual resolution.
+- ❌ Don't rebase mid-work if uncommitted edits exist; stash first.
+
+**When NOT to use rebase + force-push**:
+- If `research` has collaborators (multiple humans/agents pushing to it). For a solo project this is safe; for a team you'd need coordination.
+
+---
+
+**End of LEARNINGS.md v1.2 (updated with Part 8 §8.7).** Next update: end of Cycle A.
