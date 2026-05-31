@@ -1,8 +1,21 @@
-# 08 — Decisions Locked, v0.3 Problem Statement
+# 08 — Decisions Locked, v0.4 Problem Statement
 
-**Status**: 🔒 LOCKED
-**Date**: 2026-05-30
+**Status**: 🔒 LOCKED at v0.4
+**Date (v0.3)**: 2026-05-30
+**Date (v0.4 update)**: 2026-05-31
 **Authorized by**: Pranav
+
+---
+
+## Changelog (v0.3 → v0.4)
+
+Cycle A.6 idea-review surfaced one borderline clarification from the A.5 critic synthesis (Theme G — BFSI silent-skip product gap; Pranav's Q7 = YES). v0.3 said *"Asset universe: Direct equity NIFTY 500 for fundamentals"*, but v0.1 math silently skipped all BFSI companies (∼35–40% of NIFTY 500 by market cap). The math vs problem-statement were out of sync.
+
+**v0.4 changes** (one paragraph added; everything else unchanged):
+
+- **§8 Asset universe**: added explicit BFSI staging sentence — *"Cycle A FA pipeline covers NIFTY 500 including BFSI; v0.2 delivers a BFSI stub (trend indicators: NIM, GNPA, PCR, CAR) with a full BFSI sub-pipeline scheduled for v0.3."*
+
+No changes to Q1–Q12 locked answers, no changes to Constraints X / Y / Z, no changes to any other section. Q7 (Sharing) note: as of 2026-05-31 the GitHub repo and Medium blog #1 are public, narrowing Q7's "strictly personal" from "no public artifacts" to "no shared output / code / signals / recommendations" — the journey is public; the system is not. This is consistent with the original intent; no formal v0.5 needed.
 
 ---
 
@@ -80,6 +93,7 @@ For **Pranav**, an Indian retail investor holding a portfolio of **NSE-listed di
 
 8. **Asset universe**:
    - Direct equity: NIFTY 500 for fundamentals; **NIFTY 100 restricted for TA signals in v1** (expand to NIFTY 500 in v2 after NSE-specific validation)
+   - **BFSI staging** (added v0.4): *Cycle A FA pipeline covers NIFTY 500 including BFSI; v0.2 delivers a BFSI stub (trend indicators: NIM, GNPA, PCR, CAR) with a full BFSI sub-pipeline scheduled for v0.3. No silent skips on banking/NBFC/insurance/other-financial-services names in real-portfolio output.*
    - Mutual funds: All Indian MFs (equity, hybrid, debt) — analyzed via FA + portfolio theory + cost analysis (no TA)
 
 9. **Time horizon**: Long-term (B1) primary. Swing (B2) used only for entry/exit timing of long-term positions, not as a strategy. **No trading. No F&O.**

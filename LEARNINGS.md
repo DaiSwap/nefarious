@@ -485,4 +485,41 @@ Pranav's instruction to anonymize real company names in the published post (Asia
 
 ---
 
-**End of LEARNINGS.md v1.3 (Parts 8.8, 8.9, Part 9 added).** Next update: end of Cycle A.
+## Part 10 — Cycle A closure notes (added 2026-05-31)
+
+Cycle A closed at v0.3 on 2026-05-31 after 9 sub-steps (A.1 through A.9). The final math is in `market_research/02_cycle_A_equity_FA/18_cycle_A_math_v0.3.md`. Cross-stock validation in `19_cycle_A_A9_synthesis.md`.
+
+### 10.1 What worked
+
+- **The 6-step cycle pattern (research → picks → math → test → critique → refine) plus the optional re-test loop produces meaningful convergence.** v0.1 → v0.2 → v0.3 each surfaced specific, identifiable defects that the next iteration fixed.
+- **Multi-agent critique + multi-stock re-test is the right validation mechanism.** Each lens catches what others miss. Each stock catches what others wouldn't surface.
+- **The "broader scope > narrow scope" choice on judgment calls** (e.g., Pranav's Q2 broader CYCLICAL tag) paid off — Crompton's "soft cyclical" classification was correct.
+- **A.7 → A.8 → A.9 took one day** (parallel agents + lighter checkpoint protocol). Faster than expected because re-tests reuse existing data files.
+
+### 10.2 What's queued for the next Cycle A iteration
+
+10 v0.4 candidates documented in `19_cycle_A_A9_synthesis.md` §6. Headlines:
+
+- **V1**: BENEISH-INERT threshold sector-calibrated (current 1.0 catches utilities; Metals & Mining needs ~0.5).
+- **V2**: Cyclical N7 vs label-correctness tradeoff — defer to Cycle F (signal combination with TA), not solvable in FA alone.
+- **V3**: Full BFSI FA pipeline (P/ABV, NIM stress, GNPA cycle, CAR analysis) — currently a trend-card stub.
+- **V4**: Governance Quality Screen validation against a known manipulation case (Vakrangee / Manpasand). Spec is correct; needs ground-truth retroactive test.
+- **V5–V10**: AFFIRM 5th label, standalone Beneish for conglomerates, ADTV liquidity floor, specialty-chemicals sub-sector lookup, lease-liability split for F5, document N6 × N7 interaction formally.
+
+### 10.3 Findings that generalize beyond Cycle A
+
+- **Textbook investing math doesn't transfer cleanly to NSE.** Confirmed in A.4 (v0.1 broken in 6 ways) AND A.7 (v0.2 still 35–40% of NIFTY 500 mistreated). Re-validating signals on real Indian data > citing US literature.
+- **Cycle position is fundamentally hard to fix in FA alone.** Piotroski-style YoY-change signals naturally invert for cyclicals. v0.3's 5-yr window helps on average but introduces tradeoffs at specific dates. The right fix lives in Cycle F (signal combination with price-action), not in Cycle A.
+- **One unexpected finding per iteration was the average.** v0.1 produced 6 weaknesses on 2 stocks. v0.2 surfaced 7 new candidates on 3 stocks. v0.3 surfaced 2 new mixed findings + 1 unexpected interaction. The cycle process doesn't asymptote quickly — it surfaces structural questions that ask different things at each iteration.
+- **Diminishing returns become visible after 3 iterations.** v0.4 work would be cosmetic refinement on 2 already-OK fixes (N3, N7), not material change in direction. Closing Cycle A at v0.3 is correct.
+
+### 10.4 Process lessons for Cycle B
+
+- Use the same patterns: research agent → user picks → math write → multi-stock hand-compute test → multi-agent critique → refine.
+- **Light checkpoint protocol (≥4 writes)** is right for review-style agents; the heavier protocol from A.4 isn't needed when agents are applying existing logic to existing data.
+- **Spawn all parallel agents in one message** (M6 lesson) — every time.
+- **Surgical edits beat comprehensive rewrites.** v0.3 was ~500 lines vs v0.2's ~700 because most sections referenced unchanged content; reader can still understand the spec.
+
+---
+
+**End of LEARNINGS.md v1.4 (Part 10 added at Cycle A close).** Next update: at Cycle B close.
