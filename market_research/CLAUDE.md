@@ -15,31 +15,64 @@ An AI-powered investment planning bot for Indian NSE equities + Indian Mutual Fu
 4. **Everything stays in v0.X.** Nothing escalates to v1.0 during this entire phase of work.
 5. **NSE + Indian MFs only.** US equities, crypto, F&O all out of scope.
 
-## Directory layout
+## Directory layout (restructured 2026-05-31)
+
 ```
 nefarious/
-├── LEARNINGS.md                              # Top-level meta-learnings (mistakes, patterns, lessons)
-├── instruction.txt                           # Original prompt from Pranav
+├── LEARNINGS.md                                   # Top-level meta-learnings
+├── RESUME.md                                      # Bootstrap doc for fresh Claude sessions
+├── instruction.txt                                # Personal scratch (gitignored, not in repo)
 └── market_research/
-    ├── CLAUDE.md                             # This file — project understanding
-    ├── problem_statement.md                  # v0.1 debate (historical)
-    ├── 01_research.md                        # Phase 1: market research (5 buckets)
-    ├── 02_critique_quant.md                  # Phase 1: quant lens critique
-    ├── 03_critique_regulatory.md             # Phase 1: SEBI / regulatory lens
-    ├── 04_critique_behavioral.md             # Phase 1: behavioral finance lens
-    ├── 05_critique_product.md                # Phase 1: product/PMF lens
-    ├── 06_critique_retail.md                 # Phase 1: retail user persona
-    ├── 07_synthesis.md                       # Phase 1: synthesis + 12 questions
-    ├── 08_decisions_locked.md  🔒            # v0.3 LOCKED problem statement + Pranav's answers
-    ├── 09_phase_2_plan.md                    # Phase 2 cycle plan (rewritten after pivot)
-    ├── 10_cycle_A_research.md                # Cycle A A.1: FA math survey (4200 words, 50+ citations)
-    ├── 11_cycle_A_math_v0.1.md               # Cycle A A.3: math spec v0.1
-    ├── 12_cycle_A_test_v0.1.md               # Cycle A A.4 Phase 1A: Asian Paints test
-    ├── 13_cycle_A_test_v0.1_TataSteel.md     # Cycle A A.4 Phase 1B: Tata Steel test
-    ├── 14_cycle_A_test_synthesis_v0.1.md     # Cycle A: test synthesis across both stocks
+    ├── CLAUDE.md                                  # This file — project state
+    │
+    ├── 01_phase1_problem_framing/                 # Phase 1: closed, locked at v0.3
+    │   ├── problem_statement.md                   #   v0.1 debate (historical)
+    │   ├── 01_research.md                         #   market research (5 buckets)
+    │   ├── 02_critique_quant.md
+    │   ├── 03_critique_regulatory.md
+    │   ├── 04_critique_behavioral.md
+    │   ├── 05_critique_product.md
+    │   ├── 06_critique_retail.md
+    │   ├── 07_synthesis.md                        #   📍 DUMP 1 (synthesis + 12 questions)
+    │   ├── 08_decisions_locked.md  🔒             #   v0.3 LOCKED problem statement
+    │   └── 09_phase_2_plan.md                     #   the 6-cycle plan
+    │
+    ├── 02_cycle_A_equity_FA/                      # Cycle A: at A.5 done, A.6 next
+    │   ├── 10_cycle_A_research.md                 #   A.1: FA research survey
+    │   ├── 11_cycle_A_math_v0.1.md                #   A.3: math spec v0.1
+    │   ├── 12_cycle_A_test_v0.1.md                #   A.4-1A: Asian Paints hand-compute
+    │   ├── 13_cycle_A_test_v0.1_TataSteel.md      #   A.4-1B: Tata Steel hand-compute
+    │   ├── 14_cycle_A_test_synthesis_v0.1.md      #   A.4: 6 weaknesses surfaced
+    │   ├── A5_plan.md                             #   A.5 plan
+    │   ├── 15a_critic_quant.md                    #   A.5 critic 1 (quant)
+    │   ├── 15b_critic_forensic.md                 #   A.5 critic 2 (forensic accountant)
+    │   ├── 15c_critic_behavioral.md               #   A.5 critic 3 (behavioral finance)
+    │   ├── 15d_critic_retail_nse.md               #   A.5 critic 4 (retail + NSE)
+    │   └── 15_cycle_A_critiques_v0.1.md           #   A.5 synthesizer (v0.2 brief)
+    │
+    ├── 03_meta_synthesis/                         # Cross-phase narrative docs
+    │   └── problem_statement_dump_2.md            #   📍 DUMP 2 (post-A.5 synthesis)
+    │
+    ├── 04_blog_posts/                             # Public-facing writing
+    │   └── post_01_visibility/                    #   First Medium post
+    │       ├── blog_post_01_plan.md
+    │       ├── blog_post_01_draft.md              #   v0.1 (initial)
+    │       ├── blog_post_01_draft_v0.2.md
+    │       ├── blog_post_01_draft_v0.3.md         #   📍 PUBLISHED
+    │       ├── blog_post_01_review_C1..C5.md      #   v0.1 critic round (5 files)
+    │       ├── blog_post_01_review_synthesis.md   #   v0.1 critic synthesis
+    │       ├── blog_post_01_review_v2_C1..C5.md   #   v0.2 critic round (5 files)
+    │       └── blog_post_01_review_v2_synthesis.md  # v0.2 critic synthesis
+    │
     └── sessionlogs/
-        └── 2026-05-30-session-01.md          # Comprehensive chronological log
+        └── 2026-05-30-session-01.md               # Day 1 → Day 3 chronological log
 ```
+
+**Conventions**:
+- Top-level subfolders prefixed with `NN_` so they sort visually
+- Within each subfolder, file numbering preserves chronology (Phase 1 = `01_..09_`; Cycle A = `10_..15_`)
+- Cycle B will be `03_cycle_B_equity_TA/` with files `20_..27_`, etc.
+- `📍` markers indicate "narrative anchor" docs (Dumps, published posts)
 
 ## Current phase
 

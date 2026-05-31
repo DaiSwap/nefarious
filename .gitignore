@@ -1,6 +1,9 @@
 # Claude Code internal state
 .claude/
 
+# personal notes
+instruction.txt
+
 # macOS
 .DS_Store
 

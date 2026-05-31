@@ -71,21 +71,26 @@ The A.5 synthesizer left 8 open questions in `15_cycle_A_critiques_v0.1.md` §8 
 
 ## 2. Read these files in this exact order before doing anything
 
+**Note**: Folder structure was reorganized 2026-05-31. All Phase 1 files are now under `market_research/01_phase1_problem_framing/`, Cycle A files under `market_research/02_cycle_A_equity_FA/`, narrative synthesis under `market_research/03_meta_synthesis/`, and blog work under `market_research/04_blog_posts/`. See `market_research/CLAUDE.md` for the full layout.
+
 | # | File | Why |
 |---|---|---|
-| 1 | `/Users/pranavvenkatesh/analytics/nefarious/instruction.txt` | The original prompt Pranav wrote — the WHY of the project |
-| 2 | `/Users/pranavvenkatesh/analytics/nefarious/LEARNINGS.md` | Meta-learnings: math weaknesses, process lessons, **5 named mistakes (M1–M5) — do NOT repeat** |
-| 3 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/CLAUDE.md` | Project state, locked decisions, current phase, file map |
-| 4 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/08_decisions_locked.md` | v0.3 LOCKED problem statement — Pranav's answers to all 12 questions |
-| 5 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/09_phase_2_plan.md` | The cycle structure (A through F) — research → math → test → critique → refine |
-| 6 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/11_cycle_A_math_v0.1.md` | The math spec being tested |
-| 7 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/14_cycle_A_test_synthesis_v0.1.md` | **The 6 structural weaknesses surfaced** — this is what A.5 critics will attack |
-| 8 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/sessionlogs/2026-05-30-session-01.md` | Full chronological log of Day 1 |
+| 1 | `/Users/pranavvenkatesh/analytics/nefarious/LEARNINGS.md` | Meta-learnings: math weaknesses, process lessons, **5 named mistakes (M1–M5) — do NOT repeat**, git/restructure notes |
+| 2 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/CLAUDE.md` | Project state, locked decisions, current phase, full file map |
+| 3 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/01_phase1_problem_framing/08_decisions_locked.md` | v0.3 LOCKED problem statement — Pranav's answers to all 12 questions |
+| 4 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/01_phase1_problem_framing/09_phase_2_plan.md` | The cycle structure (A through F) — research → math → test → critique → refine |
+| 5 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/02_cycle_A_equity_FA/11_cycle_A_math_v0.1.md` | The math spec being tested |
+| 6 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/02_cycle_A_equity_FA/14_cycle_A_test_synthesis_v0.1.md` | **The 6 structural weaknesses surfaced** |
+| 7 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/02_cycle_A_equity_FA/15_cycle_A_critiques_v0.1.md` | A.5 multi-agent critique synthesis — drives the v0.2 refactor |
+| 8 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/03_meta_synthesis/problem_statement_dump_2.md` | Latest narrative dump — companion to `07_synthesis.md` (Dump 1) |
+| 9 | `/Users/pranavvenkatesh/analytics/nefarious/market_research/sessionlogs/2026-05-30-session-01.md` | Full chronological log (Day 1 through Day 3) |
 
-Optional / deeper reading (don't need at start, useful for specific questions):
-- `01_research.md` through `07_synthesis.md` (Phase 1 research & critique)
-- `10_cycle_A_research.md` (Cycle A FA research)
-- `12_cycle_A_test_v0.1.md` + `13_cycle_A_test_v0.1_TataSteel.md` (raw test outputs)
+Optional / deeper reading (don't need at start):
+- `01_phase1_problem_framing/01_research.md` through `07_synthesis.md` (Phase 1 research & critique)
+- `02_cycle_A_equity_FA/10_cycle_A_research.md` (Cycle A FA research)
+- `02_cycle_A_equity_FA/12_cycle_A_test_v0.1.md` + `13_cycle_A_test_v0.1_TataSteel.md` (raw test outputs)
+- `04_blog_posts/post_01_visibility/blog_post_01_draft_v0.3.md` (published blog post)
+- Note: `instruction.txt` (at project root) is now gitignored — Pranav's personal scratch / next-instruction file; **NOT** required for resuming work
 
 ## 3. Current task state (verify against TaskList)
 
@@ -97,7 +102,8 @@ Optional / deeper reading (don't need at start, useful for specific questions):
 | 18 | A.3 Write FA math v0.1 | ✅ completed |
 | 19 | A.4 Test FA math v0.1 | ✅ completed |
 | 20 | A.5 Multi-agent critique | ✅ completed |
-| **21** | **A.6 Refine to v0.2 + idea review** | ⏳ **NEXT** (blocked on Pranav's Q1–Q8 answers) |
+| **21** | **A.6 Refine to v0.2 + idea review** | ⏳ **NEXT** (Pranav has confirmed defaults for Q1–Q8) |
+| 27 | Plan + write first blog post (Medium) | ✅ completed (v0.3 published 2026-05-31) |
 | 22 | Cycle B header (Equity TA) | pending |
 | 23 | Cycle C header (MF analytics) | pending |
 | 24 | Cycle D header (Portfolio construction) | pending |
