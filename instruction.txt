@@ -1,5 +1,0 @@
-for new session context - Read /Users/pranavvenkatesh/analytics/nefarious/RESUME.md fully, then follow its §8 instructions. Do not skip steps. Reply only after reading
-  all files in §2.
-
-learnings.
-1. what todays LLMs is not solving or atleast not in roadmap for the foreseeable future. 

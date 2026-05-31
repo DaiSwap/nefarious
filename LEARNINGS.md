@@ -371,6 +371,118 @@ This keeps `research` always one PR ahead of `main`, with clean linear history. 
 **When NOT to use rebase + force-push**:
 - If `research` has collaborators (multiple humans/agents pushing to it). For a solo project this is safe; for a team you'd need coordination.
 
+**Edge case (added after PR #2 merge)**: if rebase fails to auto-skip the "previously applied" commits (e.g., because multiple commits were squashed together and patch-id matching gets confused), abort the rebase and `git reset --hard origin/main` instead. Then force-push. This is equivalent in effect but skips the confusing conflict-resolution dance. Safe because origin/main has all the merged content.
+
 ---
 
-**End of LEARNINGS.md v1.2 (updated with Part 8 §8.7).** Next update: end of Cycle A.
+### 8.8 — Folder restructure (added 2026-05-31)
+
+After ~40 markdown files accumulated at `market_research/` root, the folder became hard to traverse. Restructured into 4 topical subfolders:
+
+```
+market_research/
+├── CLAUDE.md
+├── 01_phase1_problem_framing/   # Phase 1 close (locked at v0.3)
+├── 02_cycle_A_equity_FA/        # Cycle A: research → math → test → critique
+├── 03_meta_synthesis/           # Cross-cutting narrative docs (Dump 2 etc.)
+├── 04_blog_posts/               # Public-facing writing
+│   └── post_01_visibility/
+└── sessionlogs/
+```
+
+**Move method**: used `git mv` for all tracked files (preserves history; git detects every move as a rename, not as a delete + create). Untracked blog files moved with plain `mv` then `git add`.
+
+**Naming convention**:
+- Top-level subfolders prefixed `NN_` for visual sort order
+- Within subfolders, original numeric prefixes preserved (Phase 1 files keep `01_..09_`; Cycle A files keep `10_..15_`). New cycles will continue: Cycle B → `20_..27_`, Cycle C → `30_..`, etc.
+- `📍` markers in CLAUDE.md's layout for narrative-anchor docs (Dump 1, Dump 2, published posts)
+
+**Lesson codified**: Restructure when traversal pain crosses ~30 files at one level. Use `git mv` so history is preserved. Update CLAUDE.md and RESUME.md path references in the same commit.
+
+### 8.9 — Untracking `instruction.txt` (added 2026-05-31)
+
+`instruction.txt` at project root was Pranav's prompt → Claude communication channel. He'd write his next ask into it, then point me there. The file accumulated personal content over the project.
+
+**Decision**: untrack via `git rm --cached instruction.txt` + leave the `.gitignore` entry he'd added. Effects:
+- File stays on Pranav's local disk
+- Removed from repo on next push
+- Future edits stay local; not in commit history
+
+**Lesson codified**: When the user adds a file to `.gitignore`, check whether it's already tracked. `.gitignore` only affects untracked files. Already-tracked files need `git rm --cached` for the gitignore to bite.
+
+---
+
+## Part 9 — Blog post writing process (added 2026-05-31)
+
+The first public-facing blog post for the project taught a separate set of lessons from the math cycles. Distilled here.
+
+### 9.1 The plan → draft → critic → synthesis → revise loop
+
+Same shape as the math cycle (research → math → test → critique → refine), applied to writing:
+
+```
+Pranav's ask → Plan written → Draft v0.1
+            → 5 critics in parallel → Synthesizer → Pranav reviews
+            → Draft v0.2 → 5 critics again → Synthesizer + Pranav reviews
+            → Draft v0.3 → publish
+```
+
+Three critic rounds (v0.1, v0.2, sometimes a final consistency pass) was the right cadence. Fewer would have left structural issues. More would have ground down to "no new feedback" noise.
+
+### 9.2 The 5 lenses that work for a blog draft
+
+For a blog post written by AI on behalf of a human, the 5 critic lenses that produced non-overlapping findings:
+
+| ID | Lens | Catches |
+|---|---|---|
+| C1 | **Target reader** (Indian retail investor here) | Does the hook land? Are the pain points real? Would they share/follow? |
+| C2 | **Editorial / writing quality** | Sentence rhythm, repetition, weak verbs, em-dash count, paragraph length |
+| C3 | **Skeptic / counter-argument** | Unsupported claims, false modesty, fabricated precision, weasel hedges |
+| C4 | **Voice authenticity (human vs AI tells)** | Em-dash overuse, hedge-word repetition, parallel-construction "tells", polished closing lines |
+| C5 | **Platform fit** (Medium here) | Title, opening hook for bounce window, subheads, tags, CTA structure |
+
+**C4 was the gating critic** in this project. The post sounded "part-human-part-AI" until C4's specific catches were addressed. The other 4 critics couldn't catch these — they're trained on different signal.
+
+### 9.3 Lighter checkpoint protocol for blog critics
+
+For math-test agents the protocol mandated 15–25 writes during a 15-minute run (Part 2.2). For blog reviewers that was overkill and contributed to the first round's stall.
+
+**Light protocol** that worked second time: ≥4 writes per agent (initialize → mid-read → mid-drafting → final ✅). Each prompt compact (~50–70 lines vs 120 for math critics). This brought reviewers from "watchdog stalled at 600s" to consistent 2–3 min completions.
+
+### 9.4 Mistake M6: batched critic spawns instead of one parallel message
+
+| ID | Mistake | When | Fix |
+|---|---|---|---|
+| **M6** | Spawned blog critics in two batches (2, then 3) instead of all 5 in one parallel message. The two-batch first round stalled at the watchdog after 600s — both agents wrote only the initial skeleton (~600 bytes) before silence. | First v0.1 critic round | Re-spawned all 5 in a single parallel message with lighter prompts. Worked. |
+
+**Lesson**: when spawning multiple agents for the same task, send them all in **one parallel message** (multiple Agent tool calls per message). Don't batch sequentially.
+
+### 9.5 Critic conflicts and how to resolve them
+
+When critics disagree, the resolution principles that worked:
+
+- **Audience > craft**: When C1 (retail reader) and C2 (editor) disagreed on naming AI labs (C2 said "name them" — Anthropic, OpenAI, Google; C1 said "reads as tech-blog inside-baseball for retail"), audience won.
+- **User > critics**: When Pranav's review caught what no critic caught (reframe motivation; use mermaid not ASCII; anonymize real company names), the user's reading is irreplaceable. Critics see the post; the user sees the post AND knows the actual intent.
+- **Voice critic always wins on voice issues**: C4 calls *"unmistakably"* defensive; C2 calls the same lines the *"two best sentences"*. Drop *"unmistakably"* (C4); keep the lines + put them last (C2). Both critics satisfied.
+
+### 9.6 Reframe-the-motivation insight
+
+The biggest single improvement v0.2 → v0.3 came from Pranav's correction: stop framing the project as *"nobody is building this, so I am"*. The actual motivation was **personal learning** (investing + AI). This:
+- Removed the C3 skeptic vector entirely (no more contested landscape claims)
+- Made the post feel more honest, not defensive
+- Aligned with the v0.3 problem-statement Q7 ("strictly personal" in Phase 1)
+
+**Lesson**: AI drafts default to *"explaining the gap in the market"* framing. The user's intent is often more personal than that. Ask the user *what they're actually trying to do* before writing in a draft that assumes commercial framing.
+
+### 9.7 Anonymization for public-facing writing
+
+Pranav's instruction to anonymize real company names in the published post (Asian Paints → Company A; Tata Steel → Company B) had three benefits:
+1. Aligned with v0.3 "strictly personal" sharing constraint
+2. Softened C3's "perfectly inverted" overclaim concern (easier to make a claim about Company B than about Tata Steel specifically)
+3. Made the principle more portable (any reader thinks "do I have a Company B in my portfolio?")
+
+**Lesson**: internal docs keep real names (for traceability). Public-facing docs anonymize. The line between *research notes* and *publishable content* is a transformation step, not a re-write.
+
+---
+
+**End of LEARNINGS.md v1.3 (Parts 8.8, 8.9, Part 9 added).** Next update: end of Cycle A.
