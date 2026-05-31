@@ -83,29 +83,33 @@ nefarious/
 - [x] Synthesis with 12 questions for Pranav
 - [x] Pranav locked all 12 answers + 3 structural updates → v0.3 LOCKED
 
-**Phase 2 — Research → Math → Test → Critique → Refine.** ⏳ In progress (Cycle A active)
+**Phase 2 — Research → Math → Test → Critique → Refine.** ⏳ In progress (Cycle A closed; Cycle B next)
 
 Phase 2 is **six sequential cycles**, each running the full research/math/test/critique/refine loop:
-- **Cycle A — Equity Fundamental Analysis** ⏳ At A.4 complete, A.5 next
-- Cycle B — Equity Technical Analysis (pending)
+- **Cycle A — Equity Fundamental Analysis** ✅ **CLOSED 2026-05-31** at v0.3
+- **Cycle B — Equity Technical Analysis** ⏳ **NEXT**
 - Cycle C — Mutual Fund analytics (pending)
 - Cycle D — Portfolio construction & sizing (pending)
 - Cycle E — Exit rules + tax-aware math (pending)
 - Cycle F — Signal combination + behavioral metrics (pending)
 
-## Cycle A status (current)
+## Cycle A status (CLOSED)
 
 | Step | Status | Output | Key finding |
 |---|---|---|---|
-| A.1 Research | ✅ | `10_cycle_A_research.md` | Piotroski best-evidenced on NSE; Magic Formula contradicted post-2012; Buffett moat screen excluded (no NSE evidence) |
-| A.2 Pranav picks | ✅ | (recorded in session log) | All defaults chosen — Piotroski-only v0.1 + Beneish/Altman as knockout gates + FCF/NI overlay + sector ROCE percentile |
+| A.1 Research | ✅ | `10_cycle_A_research.md` | Piotroski best-evidenced on NSE; Magic Formula contradicted post-2012; Buffett moat screen excluded |
+| A.2 Pranav picks | ✅ | (recorded in session log) | All defaults chosen |
 | A.3 Write math v0.1 | ✅ | `11_cycle_A_math_v0.1.md` | Pipeline: BFSI → Beneish → Altman → Pledge → Piotroski → FCF/NI → ROCE pctile → Action label |
-| A.4 Test math v0.1 | ✅ | `12_..._AsianPaints.md`, `13_..._TataSteel.md`, `14_..._synthesis_v0.1.md` | **6 structural weaknesses surfaced** — see synthesis doc |
-| A.5 Multi-agent critique | ⏳ Next | Pending | Will attack the 6 weaknesses + propose v0.2 fixes |
-| A.6 Refine to v0.2 + idea review | Pending | Pending | Math fixes + check if v0.3 → v0.4 |
+| A.4 Test math v0.1 | ✅ | `12, 13, 14` | **6 structural weaknesses surfaced** (W1–W6) |
+| A.5 Multi-agent critique | ✅ | `15, 15a–d, A5_plan` | All 4 critics: REFACTOR-REQUIRED; 9 P0 / 7 P1 items synthesized |
+| A.6 Refine to v0.2 + v0.4 PS update | ✅ | `16_cycle_A_math_v0.2.md` + `08_decisions_locked.md` v0.4 | BFSI staging clarification (Q7 = YES) |
+| A.7 v0.2 re-test (3 stocks) | ✅ | `17, 17a, 17b, 17c` | v0.2 fixes 4/6 v0.1 weaknesses fully + 2/6 substantially; **7 v0.3 candidates surfaced (N1–N7)** |
+| A.8 Refine to v0.3 | ✅ | `18_cycle_A_math_v0.3.md` | All 7 v0.3 candidates addressed |
+| A.9 v0.3 re-test (3 stocks) | ✅ | `19, 19a, 19b, 19c` | **5 of 7 v0.3 candidates confirmed FIXED**; N3 threshold cosmetic; N7 cycle-window tradeoff (defer to Cycle F); **10 v0.4 candidates queued** |
+| **Cycle A** | ✅ **CLOSED 2026-05-31** | v0.3 final for this iteration | Math validated across 3 stock profiles; ready for Cycle B |
 
-## Locked decisions (post-Phase 1, v0.3)
-- **Asset universe**: NIFTY 500 equity (NIFTY 100 for TA in v1) + all Indian Mutual Funds.
+## Locked decisions (post-Phase 1, v0.4 as of 2026-05-31)
+- **Asset universe**: NIFTY 500 equity (NIFTY 100 for TA in v1) + all Indian Mutual Funds; BFSI staging explicit (stub in v0.2 → full pipeline scheduled for next Cycle A iteration).
 - **Scope**: Investments only. No F&O, no intraday, no trading.
 - **Rollout staging**: Paper → test-portfolio → live advisory (Stages 1/2/3).
 - **Automation**: Advisory only (E1, hard-locked).

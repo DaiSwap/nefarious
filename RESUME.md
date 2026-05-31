@@ -6,54 +6,41 @@ This document is the bootstrap for a fresh Claude conversation. It exists becaus
 
 ---
 
-## 🟢 CURRENT STATE — last updated 2026-05-31 end of Day 2 (READ THIS FIRST)
+## 🟢 CURRENT STATE — last updated 2026-05-31 end of Cycle A close (READ THIS FIRST)
 
 This is the freshest state info. Trust this over any older claims in this doc if they conflict.
 
 ### Git state
-- **PR #1 (Day 1) is MERGED** to `main`. Day 1 work landed.
-- **PR #2 (Day 2) is OPEN** at https://github.com/DaiSwap/nefarious/pull/2 — Pranav to squash-merge.
-- Working tree clean. `research` in sync with `origin/research` at commit `efcb33e`.
-- Branch convention: **single rolling `research` branch**. All PRs come from `research`.
-- Merge convention: **squash and merge** (not rebase). Each PR = 1 commit on `main`.
+- **PRs #1, #2 MERGED** to `main`. Day 1 + Day 2 work landed via squash-merge.
+- **PR #3** at https://github.com/DaiSwap/nefarious/pull/3 — covered blog post + folder restructure; status may be merged or open at session start; check with `gh pr view 3`.
+- Branch convention: single rolling `research` branch. All PRs from `research`. Squash-merge.
+- Post-merge routine: `git fetch origin && git rebase origin/main && git push --force-with-lease origin research`. If rebase fails (per the v0.3 candidates being squashed-together pattern), use `git reset --hard origin/main` instead.
 
-### Cycle A progress
-- A.1 Research → A.2 Pranav picks → A.3 Math v0.1 → A.4 Test (Asian Paints + Tata Steel) → **A.5 Multi-agent critique**: all ✅ done.
-- **A.6 (refine v0.1 → v0.2 math + idea-review check)**: ⏳ NEXT — but BLOCKED on Pranav's answers to 8 open questions (see below).
+### Phase 2 progress
+- **Cycle A — Equity Fundamental Analysis** ✅ **CLOSED 2026-05-31 at v0.3**
+  - A.1 Research → A.2 Pranav picks → A.3 v0.1 math → A.4 v0.1 test → A.5 multi-agent critique → A.6 v0.2 math + v0.4 PS update → A.7 v0.2 re-test (3 stocks) → A.8 v0.3 math → A.9 v0.3 re-test (3 stocks)
+  - Final math: `02_cycle_A_equity_FA/18_cycle_A_math_v0.3.md`
+  - Cross-stock validation: `02_cycle_A_equity_FA/19_cycle_A_A9_synthesis.md` — 5 of 7 v0.3 candidates confirmed FIXED; 2 mixed (N3 threshold cosmetic, N7 cycle-window tradeoff defer-to-Cycle-F)
+  - 10 v0.4 candidates queued in `19_..._A9_synthesis.md` §6 for the next time Cycle A is revisited
+- **Cycle B — Equity Technical Analysis** ⏳ **NEXT**
+- Cycle C → D → E → F pending
 
-### IMPORTANT — Don't start A.6 without Pranav's answers
+### What to do at the start of next session
 
-The A.5 synthesizer left 8 open questions in `15_cycle_A_critiques_v0.1.md` §8 (tabulated also in `problem_statement_dump_2.md` §11). Defaults exist; Pranav must confirm:
-
-| Q | Decision | Synthesizer's default |
-|---|---|---|
-| Q1 | Beneish gate design — two-stage / additive / two-period? | Two-stage conditional halt |
-| Q2 | Cyclical tag list breadth — narrow / broader / broadest? | Broader (incl. housing/auto/construction) |
-| Q3 | Altman Z″ replacement — X2_current only / composite only / both? | Both |
-| Q4 | BFSI stub format — qualitative / quantitative / defer? | Quantitative with disclaimer |
-| Q5 | PSU gate — exclude / annotate / partial sub-pipeline? | Partial sub-pipeline |
-| Q6 | AFFIRM 5th label — add / keep 4? | Keep 4 for v0.2 |
-| Q7 *(v0.4)* | Add BFSI staging sentence to problem statement? | YES |
-| Q8 *(v0.4)* | Add cadence clarification to Q9? | NO — math handles it |
-
-### What to do at the start of your next session
-
-1. Read the rest of this file (§1–§10 below) + the 8 files in §2.
-2. Run `TaskList` — verify A.5 (#20) is **completed**; A.6 (#21) is **pending**.
-3. Check Pranav's most recent message: has he answered Q1–Q8?
-   - **If YES**: write `16_cycle_A_math_v0.2.md` directly. No agent needed — prescriptions are already explicit in `15_cycle_A_critiques_v0.1.md` §6. Optional: re-test on Asian Paints + Tata Steel before closing Cycle A.
-   - **If NO**: greet Pranav with current state and the Q1–Q8 table. Wait for answers.
+1. Read this file fully + the 9 files in §2.
+2. Run `TaskList` — verify all Cycle A tasks completed (#15–#21, #28, #29, #30); Cycle B (#22) is the next pending header.
+3. Begin **Cycle B.1 — Research Equity TA**. Scope: NIFTY 100 (per v0.4 problem statement §8). Required: walk-forward Sharpe > 0.3 after costs gate (Q12).
 
 ### What NOT to do
-- Don't write A.6 math without Q1–Q6 answers. (Q7–Q8 are v0.4 problem-statement edits; can be deferred.)
-- Don't auto-merge PR #2. Pranav merges manually.
+- Don't re-open Cycle A — the 10 v0.4 candidates are queued for a future iteration; not blocking.
 - Don't escalate any version to v1.X. Stay v0.X.
 - Don't touch implementation (no code, no architecture, no UX specs).
-- Don't make A.6 a multi-agent process — synthesizer already specified prescriptions; A.6 is a single careful write.
+- Don't bypass the cycle pattern — Cycle B follows the same 6-step structure.
 
-### After A.6 closes Cycle A
-- If Q7 = YES: draft `v0.4` of the problem statement (add one BFSI-staging-clarification sentence) before starting Cycle B.
-- **Cycle B (Equity TA)** is next — same 6-step pattern as Cycle A. Will need fresh A.1-style research first.
+### Reference for Cycle B
+- Use `02_cycle_A_equity_FA/` as the template for what each cycle's output looks like.
+- Multi-agent critique pattern in A.5 + lighter checkpoint protocol from blog work both proven for Cycle B's B.5 step.
+- Pranav's writing/voice constraints from the blog cycle apply to any public-facing output.
 
 ### Recovery if anything's broken
 - If `16_cycle_A_math_v0.2.md` already exists when you check (partial): read it first; assume a previous Claude crashed mid-write and continue from where it left off rather than starting fresh.
@@ -96,14 +83,18 @@ Optional / deeper reading (don't need at start):
 
 | ID | Task | Status |
 |---|---|---|
-| 15 | Cycle A header | pending (blocked by sub-tasks) |
+| 15 | Cycle A header | ✅ completed |
 | 16 | A.1 Research | ✅ completed |
 | 17 | A.2 Pranav picks | ✅ completed |
 | 18 | A.3 Write FA math v0.1 | ✅ completed |
 | 19 | A.4 Test FA math v0.1 | ✅ completed |
 | 20 | A.5 Multi-agent critique | ✅ completed |
-| **21** | **A.6 Refine to v0.2 + idea review** | ⏳ **NEXT** (Pranav has confirmed defaults for Q1–Q8) |
+| 21 | A.6 Refine to v0.2 + v0.4 PS update | ✅ completed |
 | 27 | Plan + write first blog post (Medium) | ✅ completed (v0.3 published 2026-05-31) |
+| 28 | A.7 v0.2 re-test (Asian Paints + Tata Steel + Crompton) | ✅ completed |
+| 29 | A.8 Write v0.3 math (addressing N1–N7) | ✅ completed |
+| 30 | A.9 v0.3 re-test (same 3 stocks) | ✅ completed |
+| **22** | **Cycle B — Equity Technical Analysis** | ⏳ **NEXT** |
 | 22 | Cycle B header (Equity TA) | pending |
 | 23 | Cycle C header (MF analytics) | pending |
 | 24 | Cycle D header (Portfolio construction) | pending |
@@ -114,20 +105,15 @@ Optional / deeper reading (don't need at start):
 
 ## 4. The immediate next step
 
-**A.6 — Refine FA math v0.1 → v0.2, plus idea-review check (does v0.3 → v0.4?).**
+**Cycle B — Equity Technical Analysis.** Cycle A closed at v0.3 on 2026-05-31.
 
-Inputs:
-- `15_cycle_A_critiques_v0.1.md` — A.5 synthesizer output with concrete v0.2 prescriptions in §6
-- `11_cycle_A_math_v0.1.md` — the math being refactored
+Cycle B follows the same 6-step pattern (B.1 research → B.2 Pranav picks → B.3 math v0.1 → B.4 test → B.5 critique → B.6 refine to v0.2). All of Cycle A is in `02_cycle_A_equity_FA/` for reference.
 
-Steps:
-1. **Get Pranav's answers to Q1–Q8** (see top "CURRENT STATE" section). Do not start writing without Q1–Q6 at minimum.
-2. **Write `16_cycle_A_math_v0.2.md`** directly. No agent. Prescriptions in §6 of the critique synthesis are explicit enough.
-3. **Optional**: re-test the v0.2 math on Asian Paints + Tata Steel to verify the fixes don't break what worked. If you do this, use the checkpoint protocol (§6).
-4. **If Q7 = YES**: draft `17_decisions_locked_v0.4.md` with the BFSI staging clarification sentence added to v0.3.
-5. **Bundle commit + PR #3** after A.6 lands.
+Next session: start B.1 — research Equity TA. Restricted to NIFTY 100 per v0.4 problem statement §8. Per the same locked Q12, every signal must walk-forward backtest at Sharpe > 0.3 after costs before being trusted.
 
-Do NOT make A.6 a multi-agent process. The synthesizer already produced specific prescriptions; A.6 is a careful single write that integrates them.
+For continuity, also queued:
+- **10 v0.4 Cycle A candidates** logged in `02_cycle_A_equity_FA/19_cycle_A_A9_synthesis.md` §6 — to be addressed when Cycle A is revisited (likely after Cycle F surfaces cross-signal interactions, or when BFSI / Vakrangee-style validation becomes possible).
+- **Governance Quality Screen** + **hysteresis** remain UNTESTED in real data — not blocking, but ground-truth manipulation cases would validate.
 
 ## 5. Working principles — non-negotiable
 
