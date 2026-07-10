@@ -1,0 +1,38 @@
+I've been noticing something at work, and the more I see it, the more convinced I am that we're walking into a problem with our eyes open.
+
+Everyone around me is using AI to be more efficient. I do too. But somewhere along the way, efficiency quietly became the only goal, and we stopped asking what we're trading away for it.
+
+Here's the pattern that worries me most.
+
+Say you're building an AI agent. You need to validate its outputs. What do most teams do today? They use another AI to validate it. Think about what's actually happening there: the thing being created is AI-generated, and the thing checking it is also AI-generated. Neither has ground truth. The human-in loop, as they say, is not effective because the output looks polished, nobody feels the need to look closer. When both sides of the loop are probabilistic, errors don't cancel out. They compound.
+
+It gets worse when you zoom out to how teams actually ship things now.
+
+A product manager uses AI to write the long and exhaustive PRD. The engineer uses AI to read that PRD and write the code. The QA team uses AI to generate test cases from the same PRD. At the end of this chain, ask a simple question: who on this team actually understands every requirement and knows in detail what was built?
+
+Often, nobody. Not because people are lazy, but because AI produces so much output, so fast, that reviewing all of it in its entirety is practically impossible. So we skim. We approve. We move on. The understanding that used to live in a human head now lives nowhere at all. It's distributed across a chain of model outputs that no single person has fully read.
+
+That's not efficiency. That's borrowed understanding, and the debt comes due at the worst possible time, in production, in front of a customer, in an edge case nobody thought about because nobody was really thinking.
+
+And this isn't just a tech problem.
+
+Look at content creation. The internet is filling up with writing that is technically fine and completely forgettable. Same structure, same tone, same safe conclusions. When everyone draws from the same models trained on the same data, the outputs converge. Originality doesn't die dramatically. It just gets averaged out. The creators who stand out today are increasingly the ones whose work feels unmistakably human - a specific experience, an unusual opinion, a voice you couldn't have prompted your way into.
+
+You can see early versions of this everywhere. Students who let AI write their essays and can't defend a single argument in them. Job candidates who uses agents to polished their resumes, can't justify their resume points. Designers who generate ten options in a minute but can't explain why any of them is right. Analysts who present AI-written summaries of reports they never opened.
+
+None of these people got less capable overnight. They just stopped exercising the muscle. And critical thinking is exactly that - a muscle. It doesn't disappear when you use AI. It disappears when you stop doing the thinking yourself.
+
+So here is what I strongly believe about where this goes.
+
+In a world where AI-generated output is abundant and nearly free, the scarce thing, the valued thing, will be the opposite. Judgment. Original perspective. The ability to look at something and know whether it's actually right, not just whether it looks right. Deep understanding of what you built and why.
+
+The Skill That Survives AI Is Knowing When Not to Use It
+
+Tomorrow's premium skill won't be "knows how to use AI." Everyone will know how to use AI. The premium skill will be knowing where not to use it. Knowing which parts of your work are the parts where your own thinking is the whole point (validation, judgment calls, original ideas, anything where being wrong is expensive) and protecting those fiercely.
+
+I'm not arguing against AI. I use it every day, and I'd be slower without it. I'm arguing against outsourcing the one thing that makes your work yours.
+
+Use AI for the leverage. Keep the thinking.
+
+Because in a few years, when everyone's output looks the same, the people who kept thinking for themselves will be the only ones with something different to say.
+

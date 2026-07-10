@@ -522,4 +522,95 @@ Cycle A closed at v0.3 on 2026-05-31 after 9 sub-steps (A.1 through A.9). The fi
 
 ---
 
-**End of LEARNINGS.md v1.4 (Part 10 added at Cycle A close).** Next update: at Cycle B close.
+**End of LEARNINGS.md v1.4 (Part 10 added at Cycle A close).**
+
+---
+
+## Part 11 — Cycle B + first wave of external feedback (added 2026-06-06)
+
+This part covers everything from Cycle A close through PR #6: Cycle B opened (B.1 → B.5), Blog #2 published, Blog #3 drafted-then-shelved, senior comment on Blog #2 received and integrated, replacement Blog #3 planned, agent-patterns library input.
+
+### 11.1 Cycle B test findings (B.4 + B.5)
+
+Cycle B.4 scaled test universe meaningfully: 6 stocks × 6 dates = 36 evaluation cells (vs A.4's 2 × 4 = 8). Result: 53% GOOD hit rate — below the 60% target. Seven structural weaknesses + one positive finding.
+
+Two findings worth flagging as **generalizable beyond Cycle B**:
+
+- **B-W1 — Cross-cycle compounding at cyclical troughs.** TA's 40-week SMA regime gate is a trailing signal in exactly the same way Piotroski's YoY-change signals are. At commodity-cycle troughs, both Cycles A and B point bearish simultaneously — they don't *confirm* each other, they *trail the same underlying driver*. The §10 combined-display rule (which defaults to the more conservative label on conflict) makes the combined system MORE restrictive at the best entry of the decade. This is the strongest evidence yet that Cycle F (signal combination) needs real conditional-independence math, not a display rule.
+
+- **B-W5 — MIN/MAX safety inversion caught by Quant critic.** The B.4 synthesis proposed `stop = MIN(2.5×ATR, 15%)` to cap stops in crisis volatility. The Quant critic caught that the SAME formula structure must be used for stop placement AND position sizing — but with MIN for one and MAX for the other. Mis-applying it would have TRIPLED position size at the worst moment. **This was a real safety catch only one of the five critics found.** It's the single most concrete piece of evidence the multi-critic structure produces unique value.
+
+### 11.2 Validation of cycle architecture by external library
+
+The agent-patterns.readthedocs.io library catalogues 9 production patterns. Our cycle architecture (research → math → test → multi-critic → synthesizer → refine + queued failures for next iteration) is a clean composition of three named patterns:
+- **Reflection** — our cycle-level loop
+- **STORM** — our 5-critic + synthesizer step
+- **Reflexion** — our v0.X candidate queue (catalogued failures fed back into next iteration)
+
+We built this from first principles. Independent confirmation that the architecture is reasonable.
+
+The library also independently recommends **role-based cross-model configuration** as the next-level upgrade — the same fix the senior commenter on Blog #2 proposed.
+
+### 11.3 The senior comment — engagement vs capitulation
+
+A senior reader's comment on Blog #2 pointed out that all 5 critics + synthesizer running on Claude share the same training distribution and the same blind spots — "self-confirmation with extra steps." Proposed fixes: cross-model diversity, adversarial framing, human-as-arbiter.
+
+Critique is structurally right. But the FIRST draft of Blog #3 (the replacement post) over-applied the "still learning" tone and uniformly agreed with the critique across 4 sections. Skeptic + Voice critics independently flagged this from different angles:
+- Skeptic: "capitulation isn't engagement"
+- Voice: three "Yes —" parallel openers + performed humility throughout
+
+**The general lesson**: when external critique lands, the right response is selective defense + clean concession, not uniform agreement. Defending where you have evidence (Blog #2's three concrete catches) and conceding where the structural critique generalizes is engagement. Agreeing across the board is its own form of AI tell.
+
+### 11.4 Mistake M7 — uniform agreement as the new AI failure mode
+
+| M7 | First-draft Blog #3 plan capitulated to senior critique uniformly | After plan v0.3 ; before any draft prose | Skeptic + Voice critics independently caught it. Plan needs revision: defend Blog #2's catches as real, concede selectively, add one "false-alarm" moment per Blog #2's pattern. |
+
+The pattern across M1–M7 is now twofold:
+- M1–M5: moving too fast, over-committing, then having to revert
+- M6: spawning agents in sequential batches instead of one parallel message
+- **M7: over-applying tone constraints until the content slips into performed humility**
+
+### 11.5 The "false-alarm" finding pattern (positive)
+
+5–15% of critic findings turn out to be false alarms — the critic flagged something that didn't survive scrutiny on review. In Cycle B.4 + Blog #2's first critic round + the new Blog #3 plan reviews, every batch had at least one. This is a feature, not a bug. Blog #2 included one false-alarm paragraph in §3; Voice critic on Blog #3 explicitly called this out as the moment that raised the authenticity signal of the whole post.
+
+**Lesson**: keep false alarms in published material. Voluntary inclusion of "where my reasoning didn't satisfy me" reads as honest — its absence reads as performed humility.
+
+### 11.6 Twitter/X paywalled fetches
+
+WebFetch on twitter.com / x.com returns HTTP 402 anonymously. Tweets cannot be retrieved without authenticated API access.
+
+**Lesson**: when external content references include tweets, expect to need the user to share the content directly. Plan around this; don't promise content you can't fetch.
+
+### 11.7 Mid-session gh CLI auth friction
+
+Sessions can start with gh CLI unauthenticated (fresh shell, expired token, multi-account state from another shell). Push attempts via the `!gh auth git-credential` helper then fail silently or with "anonymous write access" errors.
+
+**Lesson**: check `gh auth status` early in any session that will push or create PRs. If unauthenticated, immediately run `gh auth login --hostname github.com --git-protocol https --web` in background and surface the device-flow code to the user — don't wait for push failures to discover the auth gap.
+
+### 11.8 Cross-blog series continuity
+
+Blog #2 ended with an explicit teaser for the F-Score post ("Next post: a famous investing checklist..."). When the F-Score post was shelved and replaced with a different Blog #3, returning readers arrive confused unless the redirect is explicitly acknowledged. Reader critic caught this; nothing else flagged it.
+
+Meanwhile, Medium-fit critic noted that explicit continuation framing in subheads ("Where we are in the project arc") hurts cold-reader curation — Medium's recommendation engine penalises posts that signal "you've missed things." Tension between two audiences:
+- Returning readers want continuity acknowledgement
+- Cold readers want standalone-readable framing
+
+**Lesson**: standalone-readable subheads + acknowledge any prior-post teaser redirect in the body, not the subhead structure. Use Medium's native series feature for explicit continuity, not inline framing.
+
+### 11.9 New tools used this iteration
+
+- **WebFetch** — for agent-patterns library (worked) and tweets (HTTP 402)
+- **gh device-flow auth** — for mid-session re-auth as DaiSwap
+- **5-critic parallel review on plans (not just drafts)** — proven to surface structural issues before drafting effort is spent. Used for Blog #3 plan; caught M7 before any draft existed.
+
+### 11.10 Generalisable findings for Cycles C–F
+
+- **Cyclical inversion is a property of trailing signals, not a property of any specific framework.** Both Cycle A's Piotroski (YoY changes) and Cycle B's 40-week SMA (price-vs-lagging-MA) showed it. Expect Cycle C (MF analytics) and Cycle E (exit rules) to surface their own versions. The fix lives in Cycle F's signal combination math.
+- **Multi-stock testing has a natural scale step.** A.4 = 2 stocks; B.4 = 6 stocks. Both surfaced real findings the smaller sample wouldn't have. For Cycle C (MFs), 8–12 funds is probably the right scale; for Cycle D (portfolio construction), the cell unit is portfolio shapes not single names.
+- **The combined-display logic (§10) is provisional everywhere.** Until Cycle F, all cross-cycle integration is a display rule + default conflict resolution. The structural compounding problem at cyclical extremes means simple averaging or conservative-default rules are insufficient.
+- **Cross-model critic diversity is on the roadmap.** Even if not executed empirically, the next critic round (B.6 onward) should include adversarial framing for the synthesizer step specifically (cheap to add, partially addresses the same-model blind-spot problem).
+
+---
+
+**End of LEARNINGS.md v1.5 (Part 11 added 2026-06-06).** Next update: at Cycle B close OR when next major external feedback arrives.
