@@ -1,168 +1,135 @@
 # Project: Nefarious — Investment Planning Bot
 
 ## One-liner
-An AI-powered investment planning bot for Indian NSE equities + Indian Mutual Funds that combines fundamental analysis (Cycle A), technical analysis (Cycle B), and portfolio-construction math (Cycles C–F) to give Pranav a personalized, reasoned action plan to improve his portfolio. **Math correctness is the v0.X priority; implementation comes later.**
+An AI-powered investment planning bot for Indian NSE equities + Indian Mutual Funds that combines fundamental analysis (Cycle A), technical analysis (Cycle B), and portfolio-construction math (Cycles C–F) to give Pranav a personalized, reasoned action plan. **Math correctness is the v0.X priority; implementation comes later (Phase 3).**
 
 ## User
-- **Owner**: Pranav Venkatesh (pranav.venkatesh@skit.ai)
+- **Owner**: Pranav Venkatesh
 - **Role in project**: Drives the math/strategy/methodology. The bot is *guided by* the user's domain knowledge — not making strategy up on its own.
-- **Initial portfolio**: Indian NSE equities + Mutual Funds. Portfolio file deferred — math validation comes first.
+- **Portfolio file**: deferred — math validation comes first.
 
 ## Working principles
-1. **User drives strategy, Claude drives structure.** Pranav specifies what math to use and when. Claude implements the structure, documents, and challenges.
+1. **User drives strategy, Claude drives structure.**
 2. **Research → write math → test → multi-agent critique → refine.** No code. No data pipelines. No architecture. The cycle is inside the math.
-3. **Document the journey, not just the destination.** All decisions, debates, mistakes, and pivots get written to `sessionlogs/` and the relevant artifact doc.
-4. **Everything stays in v0.X.** Nothing escalates to v1.0 during this entire phase of work.
+3. **Document the journey, not just the destination** — session logs + LEARNINGS.md.
+4. **Everything stays in v0.X** for all of Phase 2.
 5. **NSE + Indian MFs only.** US equities, crypto, F&O all out of scope.
 
-## Directory layout (restructured 2026-05-31)
+## Directory layout (refreshed 2026-06-10)
 
 ```
 nefarious/
-├── LEARNINGS.md                                   # Top-level meta-learnings
-├── RESUME.md                                      # Bootstrap doc for fresh Claude sessions
-├── instruction.txt                                # Personal scratch (gitignored, not in repo)
+├── LEARNINGS.md                                   # Meta-learnings (Parts 1–11; mistakes M1–M7)
+├── RESUME.md                                      # Bootstrap doc — CURRENT STATE block is authoritative
+├── coding_assist/claude.md                        # Generic coding guidelines (Pranav's)
+├── instruction.txt / idea_blog3.txt               # Personal scratch (untracked / gitignored)
 └── market_research/
-    ├── CLAUDE.md                                  # This file — project state
+    ├── CLAUDE.md                                  # This file
     │
-    ├── 01_phase1_problem_framing/                 # Phase 1: closed, locked at v0.3
-    │   ├── problem_statement.md                   #   v0.1 debate (historical)
-    │   ├── 01_research.md                         #   market research (5 buckets)
-    │   ├── 02_critique_quant.md
-    │   ├── 03_critique_regulatory.md
-    │   ├── 04_critique_behavioral.md
-    │   ├── 05_critique_product.md
-    │   ├── 06_critique_retail.md
-    │   ├── 07_synthesis.md                        #   📍 DUMP 1 (synthesis + 12 questions)
-    │   ├── 08_decisions_locked.md  🔒             #   v0.3 LOCKED problem statement
+    ├── 01_phase1_problem_framing/                 # Phase 1: closed, LOCKED at v0.4
+    │   ├── 01_research.md .. 07_synthesis.md      #   research + 5-lens critique (📍 07 = DUMP 1)
+    │   ├── 08_decisions_locked.md  🔒             #   v0.4 LOCKED problem statement
     │   └── 09_phase_2_plan.md                     #   the 6-cycle plan
     │
-    ├── 02_cycle_A_equity_FA/                      # Cycle A: at A.5 done, A.6 next
-    │   ├── 10_cycle_A_research.md                 #   A.1: FA research survey
-    │   ├── 11_cycle_A_math_v0.1.md                #   A.3: math spec v0.1
-    │   ├── 12_cycle_A_test_v0.1.md                #   A.4-1A: Asian Paints hand-compute
-    │   ├── 13_cycle_A_test_v0.1_TataSteel.md      #   A.4-1B: Tata Steel hand-compute
-    │   ├── 14_cycle_A_test_synthesis_v0.1.md      #   A.4: 6 weaknesses surfaced
-    │   ├── A5_plan.md                             #   A.5 plan
-    │   ├── 15a_critic_quant.md                    #   A.5 critic 1 (quant)
-    │   ├── 15b_critic_forensic.md                 #   A.5 critic 2 (forensic accountant)
-    │   ├── 15c_critic_behavioral.md               #   A.5 critic 3 (behavioral finance)
-    │   ├── 15d_critic_retail_nse.md               #   A.5 critic 4 (retail + NSE)
-    │   └── 15_cycle_A_critiques_v0.1.md           #   A.5 synthesizer (v0.2 brief)
+    ├── 02_cycle_A_equity_FA/                      # Cycle A: ✅ CLOSED at v0.3 (2026-05-31)
+    │   ├── 10_cycle_A_research.md                 #   A.1 research
+    │   ├── 11_cycle_A_math_v0.1.md → 18_..._v0.3.md  # math iterations (18 = final)
+    │   ├── 12/13 test files; 14 test synthesis    #   A.4 (6 weaknesses W1–W6)
+    │   ├── 15, 15a–d + A5_plan.md                 #   A.5 critique round
+    │   ├── 17, 17a–c                              #   A.7 v0.2 re-test
+    │   └── 19, 19a–c                              #   A.9 v0.3 re-test (10 v0.4 candidates queued in 19 §6)
     │
-    ├── 03_meta_synthesis/                         # Cross-phase narrative docs
-    │   └── problem_statement_dump_2.md            #   📍 DUMP 2 (post-A.5 synthesis)
+    ├── 03_cycle_B_equity_TA/                      # Cycle B: at B.5 done, B.6 PENDING
+    │   ├── 20_cycle_B_research.md                 #   B.1 research (7-indicator shortlist)
+    │   ├── 21_cycle_B_math_v0.1.md                #   B.3 v0.1 math
+    │   ├── 22_..._<6 stocks>.md                   #   B.4 tests (6 stocks × 6 dates)
+    │   ├── 23_cycle_B_test_synthesis_v0.1.md      #   B.4 synthesis (B-W1..B-W7 + B-P1; 53% hit rate)
+    │   └── 24, 24a–e                              #   B.5 critique (unanimous REFACTOR-REQUIRED; 11 P0 + 13 P1; 7 decisions pending in 24 §8)
     │
-    ├── 04_blog_posts/                             # Public-facing writing
-    │   └── post_01_visibility/                    #   First Medium post
-    │       ├── blog_post_01_plan.md
-    │       ├── blog_post_01_draft.md              #   v0.1 (initial)
-    │       ├── blog_post_01_draft_v0.2.md
-    │       ├── blog_post_01_draft_v0.3.md         #   📍 PUBLISHED
-    │       ├── blog_post_01_review_C1..C5.md      #   v0.1 critic round (5 files)
-    │       ├── blog_post_01_review_synthesis.md   #   v0.1 critic synthesis
-    │       ├── blog_post_01_review_v2_C1..C5.md   #   v0.2 critic round (5 files)
-    │       └── blog_post_01_review_v2_synthesis.md  # v0.2 critic synthesis
+    ├── 03_meta_synthesis/                         # Cross-phase narrative + strategy docs
+    │   ├── problem_statement_dump_2.md            #   📍 DUMP 2
+    │   ├── next_steps_post_blog2_feedback.md      #   the 5-path plan (A–E)
+    │   ├── next_steps_debate/                     #   5 advocate cases (Operator/Skeptic/Storyteller/Engineer/Investor) — verdict PENDING
+    │   └── repo_review/                           #   R1/R3/R4 summaries (⚠️ R5 is local-only, NEVER commit)
+    │
+    ├── 04_blog_posts/
+    │   ├── post_01_visibility/                    #   📍 PUBLISHED — Blog #1
+    │   ├── post_02_multi_agent_critique/          #   📍 PUBLISHED — Blog #2 (+ feedback/ = senior comment)
+    │   ├── post_03_piotroski_cyclicals/           #   shelved, unpublished
+    │   ├── post_03b_multi_model_meta_experiment/  #   deferred concept (plan + reviews only)
+    │   └── post_03_keep_the_thinking/             #   📍 PUBLISHED — Blog #3 (2026-06-10)
+    │
+    ├── 05_external_inputs/                        # External sources (agent-patterns library; 2 tweets pending)
     │
     └── sessionlogs/
-        └── 2026-05-30-session-01.md               # Day 1 → Day 3 chronological log
+        ├── 2026-05-30-session-01.md               # Day 1–3 chronological log
+        └── 2026-06-10-session-02.md               # Catch-up log: 2026-05-31 → 2026-06-10
 ```
 
-**Conventions**:
-- Top-level subfolders prefixed with `NN_` so they sort visually
-- Within each subfolder, file numbering preserves chronology (Phase 1 = `01_..09_`; Cycle A = `10_..15_`)
-- Cycle B will be `03_cycle_B_equity_TA/` with files `20_..27_`, etc.
-- `📍` markers indicate "narrative anchor" docs (Dumps, published posts)
+**Conventions**: `NN_` numeric prefixes for order; per-cycle file numbering (Cycle A = 10–19, B = 20–29, C = 30–39...); new file per math version; synthesis files suffixed `_synthesis`. Known structural debts filed as GitHub issues #20–#24.
 
 ## Current phase
 
-**Phase 1 — Problem framing & market research.** ✅ COMPLETE (2026-05-30 PM)
-- [x] Initial problem statement debate (v0.1)
-- [x] Market research: 16 Indian products audited, 30+ academic/regulatory sources
-- [x] 5-lens critique (quant, regulatory, behavioral, product, retail persona) — parallel agents
-- [x] Synthesis with 12 questions for Pranav
-- [x] Pranav locked all 12 answers + 3 structural updates → v0.3 LOCKED
+**Phase 1** ✅ complete — problem statement LOCKED at v0.4 (`01_phase1_problem_framing/08_decisions_locked.md`).
 
-**Phase 2 — Research → Math → Test → Critique → Refine.** ⏳ In progress (Cycle A closed; Cycle B next)
+**Phase 2** ⏳ in progress — six sequential cycles:
 
-Phase 2 is **six sequential cycles**, each running the full research/math/test/critique/refine loop:
-- **Cycle A — Equity Fundamental Analysis** ✅ **CLOSED 2026-05-31** at v0.3
-- **Cycle B — Equity Technical Analysis** ⏳ **NEXT**
-- Cycle C — Mutual Fund analytics (pending)
-- Cycle D — Portfolio construction & sizing (pending)
-- Cycle E — Exit rules + tax-aware math (pending)
-- Cycle F — Signal combination + behavioral metrics (pending)
+| Cycle | Scope | Status |
+|---|---|---|
+| **A** | Equity Fundamental Analysis | ✅ **CLOSED at v0.3** (2026-05-31); 10 v0.4 candidates queued |
+| **B** | Equity Technical Analysis | ⏳ **B.5 done; B.6 pending** (7 decisions await Pranav) |
+| C | Mutual Fund analytics | pending |
+| D | Portfolio construction & sizing | pending |
+| E | Exit rules + tax-aware math | pending |
+| F | Signal combination + behavioral metrics | pending |
 
-## Cycle A status (CLOSED)
+### Cycle B status detail
 
-| Step | Status | Output | Key finding |
-|---|---|---|---|
-| A.1 Research | ✅ | `10_cycle_A_research.md` | Piotroski best-evidenced on NSE; Magic Formula contradicted post-2012; Buffett moat screen excluded |
-| A.2 Pranav picks | ✅ | (recorded in session log) | All defaults chosen |
-| A.3 Write math v0.1 | ✅ | `11_cycle_A_math_v0.1.md` | Pipeline: BFSI → Beneish → Altman → Pledge → Piotroski → FCF/NI → ROCE pctile → Action label |
-| A.4 Test math v0.1 | ✅ | `12, 13, 14` | **6 structural weaknesses surfaced** (W1–W6) |
-| A.5 Multi-agent critique | ✅ | `15, 15a–d, A5_plan` | All 4 critics: REFACTOR-REQUIRED; 9 P0 / 7 P1 items synthesized |
-| A.6 Refine to v0.2 + v0.4 PS update | ✅ | `16_cycle_A_math_v0.2.md` + `08_decisions_locked.md` v0.4 | BFSI staging clarification (Q7 = YES) |
-| A.7 v0.2 re-test (3 stocks) | ✅ | `17, 17a, 17b, 17c` | v0.2 fixes 4/6 v0.1 weaknesses fully + 2/6 substantially; **7 v0.3 candidates surfaced (N1–N7)** |
-| A.8 Refine to v0.3 | ✅ | `18_cycle_A_math_v0.3.md` | All 7 v0.3 candidates addressed |
-| A.9 v0.3 re-test (3 stocks) | ✅ | `19, 19a, 19b, 19c` | **5 of 7 v0.3 candidates confirmed FIXED**; N3 threshold cosmetic; N7 cycle-window tradeoff (defer to Cycle F); **10 v0.4 candidates queued** |
-| **Cycle A** | ✅ **CLOSED 2026-05-31** | v0.3 final for this iteration | Math validated across 3 stock profiles; ready for Cycle B |
+| Step | Status | Key finding |
+|---|---|---|
+| B.1 Research | ✅ | 7-indicator shortlist (200-DMA, ADX, ROC, MACD, RSI, Bollinger, ATR) |
+| B.3 Math v0.1 | ✅ | 8-step pipeline; ENTRY_ZONE / WAIT / AVOID_ENTRY / EXIT_WARNING labels |
+| B.4 Test | ✅ | 6 stocks × 6 dates; **53% hit rate (below 60% target)**; 7 weaknesses B-W1..B-W7 + positive B-P1 (DI-flip leads) |
+| B.5 Critique | ✅ | 5 critics unanimous REFACTOR-REQUIRED; **B-W1 cross-cycle compounding** (FA + TA both trail cyclical troughs); **B-W5 MIN/MAX safety catch**; BFSI = cross-cycle blocker |
+| **B.6 Refine to v0.2** | ⏳ pending | Blocked on Pranav's 7 binary decisions (`24_cycle_B_critiques_v0.1.md` §8) + next-steps verdict |
 
-## Locked decisions (post-Phase 1, v0.4 as of 2026-05-31)
-- **Asset universe**: NIFTY 500 equity (NIFTY 100 for TA in v1) + all Indian Mutual Funds; BFSI staging explicit (stub in v0.2 → full pipeline scheduled for next Cycle A iteration).
-- **Scope**: Investments only. No F&O, no intraday, no trading.
-- **Rollout staging**: Paper → test-portfolio → live advisory (Stages 1/2/3).
-- **Automation**: Advisory only (E1, hard-locked).
-- **Sharing**: None in Phase 1. Strictly personal use until 2026-08-30 PMF gate.
-- **LLM role**: Reasoning/explanation layer over Python-computed signals — **NOT** a signal source.
-- **Backtest gate**: Walk-forward, 3yr NSE data, Sharpe > 0.3 after costs, before any signal goes live (will be applied during Phase 3+).
-- **Tax**: LTCG/STCG calculator in v1, factored into sell recommendations.
-- **Primary success metric**: Behavioral (stop-loss adherence + disposition-effect reduction + engagement rate) + Sharpe improvement as secondary.
-- **Milestone gate**: 2026-08-30 for PMF re-evaluation (personal-tool vs productize decision).
+## Public face — blogs (Medium @DaiSwap)
 
-## Key learnings so far
+1. [I'm building an AI to argue with me about my own stock portfolio](https://medium.com/@DaiSwap/im-building-an-ai-to-argue-with-me-about-my-own-stock-portfolio-e613a279e628)
+2. [One AI agent agrees with you. Five agents catch your mistakes.](https://medium.com/@DaiSwap/one-ai-agent-agrees-with-you-five-agents-catch-your-mistakes-255e3ce606b9)
+3. [Everyone can use AI. Almost nobody knows when not to.](https://medium.com/@DaiSwap/everyone-can-use-ai-almost-nobody-knows-when-not-to-4b000183b334)
 
-See `/Users/pranavvenkatesh/analytics/nefarious/LEARNINGS.md` for the full curated meta-record.
+Blog #2 drew a high-signal reader critique (same-model blind spots) — stored + analysed at `04_blog_posts/post_02_multi_agent_critique/feedback/01_comment_senior_critique.md`; it drives methodology upgrades (adversarial synthesizer framing, cross-model roadmap, human-as-arbiter as explicit protocol).
 
-Short version (Cycle A A.4 findings):
-- **v0.1 FA math is broken in 6 identifiable structural ways.** Imported US signals (Beneish, Altman, Piotroski) have NSE-specific failure modes that only surface with hand-computation on real data.
-- **Piotroski F-Score is anti-correlated with cyclical entry opportunity.** Tata Steel Mar-2020 F=5 (best buy of decade, +355% forward) vs Mar-2021 F=8 (peak, market-matching).
-- **Beneish gives false positives during regime shifts** (COVID-era working capital aberrations) and **false negatives for commodity firms** (large non-cash charges suppress TATA term).
-- **Trailing fundamentals cannot see forward disruptions** (competitive entries, demand-cycle inflection, valuation mean-reversion). FA alone is insufficient — Cycles B/F will need to address.
-- **Process lessons**: agents > 5 min need incremental checkpoint writes + background mode. The Phase 2 "implementation pivot" mistake (deleting tasks 10–14) cost ~30 min but corrected the trajectory.
+## Locked decisions (v0.4, 2026-05-31)
+- **Asset universe**: NIFTY 500 equity (NIFTY 100 for TA in v1) + all Indian MFs; BFSI staging explicit (stub → full pipeline scheduled).
+- **Scope**: investments only — no F&O, no intraday.
+- **Rollout**: paper → test-portfolio → live advisory (Stages 1/2/3). Advisory only (E1 hard-locked).
+- **Sharing**: journey public (blogs/repo); system/signals/recommendations private. PMF gate 2026-08-30.
+- **LLM role**: reasoning/explanation layer — NOT a signal source.
+- **Backtest gate**: walk-forward, 3yr NSE, Sharpe > 0.3 after costs (Q12).
+- **Tax**: LTCG/STCG calculator in v1.
+- **Primary metric**: behavioral (stop-loss adherence, disposition-effect reduction, engagement) + Sharpe secondary.
+
+## Key learnings
+See `LEARNINGS.md` (Parts 1–11; mistakes M1–M7). Highlights: trailing signals (FA *and* TA) invert at cyclical troughs — real fix lives in Cycle F; imported US math needs NSE re-validation every time; multi-agent critique catches real bugs (B-W5 MIN/MAX inversion) but same-model critics share blind spots (senior comment) — mitigations: adversarial synthesizer prompts, human-as-arbiter, cross-model roadmap.
 
 ## Phase log (high-level)
-
-- **2026-05-30 AM**: Project kicked off. Workspace created. Problem statement debate started (v0.1).
-- **2026-05-30 16:00–18:00**: Market research + 5-lens parallel critique + synthesis → Pranav locked v0.3.
-- **2026-05-30 18:00–20:00**: Phase 2 plan written → then rewritten after "no implementation" pivot (mistake M1). Cycle structure adopted (A → F sequential).
-- **2026-05-30 20:00–20:45**: Cycle A A.1 (research agent → 60 KB FA survey) + A.2 (defaults picked) + A.3 (v0.1 math spec written).
-- **2026-05-30 20:45–22:00**: A.4 attempt #1: 55-min foreground agent without checkpoint protocol → lost on interrupt (mistake M2 + M3). Recovery: invented checkpoint protocol + background-mode pattern.
-- **2026-05-30 22:00–22:30**: A.4 Phase 1A — Asian Paints test (17 min, 25+ checkpoint writes, complete output).
-- **2026-05-30 22:30–22:50**: A.4 Phase 1B — Tata Steel test (15 min, same protocol, complete output).
-- **2026-05-30 22:50**: A.4 closed. 6 structural weaknesses documented in `14_cycle_A_test_synthesis_v0.1.md`. A.5 critique next.
+- **2026-05-30**: Phase 1 closed (v0.3 locked); Cycle A through A.4; checkpoint protocol invented after M2.
+- **2026-05-31**: Cycle A closed at v0.3 (A.5–A.9). Blog #1 published. Cycle B B.1–B.5 run. Blogs #2/#3 drafted. Folder restructure. (PRs #3–#5)
+- **2026-06-06**: Blog #2 published; senior comment received + integrated; F-Score Blog #3 shelved; replacement planned; 5-path next-steps plan. (PR #6)
+- **2026-06-10**: Blog #3 pivoted to Pranav's "keep the thinking" thesis and **published**. 5-advocate next-steps debate written (verdict pending). 5-agent repo review → 24 GitHub issues (#7–#30). LEARNINGS Part 11. Docs refreshed. (PRs #31+)
 
 ## What's next
-
-- **Cycle A.5 — Multi-agent critique** of the v0.1 math + Asian Paints + Tata Steel test results. Will attack the 6 structural weaknesses from distinct lenses (quant, forensic accountant, behavioral, retail user, NSE-specific). Output: `15_cycle_A_critiques_v0.1.md`.
-- **Cycle A.6 — Refine to v0.2** + check whether anything in A.5 / A.4 demands a problem-statement update (v0.3 → v0.4). Output: `16_cycle_A_math_v0.2.md`.
-- Then close Cycle A; begin Cycle B (Equity TA).
+Authoritative next-step lives in **RESUME.md → CURRENT STATE** (single source; this section just points there). As of 2026-06-10: get Pranav's verdict on the next-steps debate, then execute (B.6 v0.2 math / Path B BFSI / Path C cross-model / build-rough per Investor).
 
 ## GitHub repo
-
-- **Remote**: https://github.com/DaiSwap/nefarious
-- **Default branch**: `main` (contains only LICENSE)
-- **Working branch**: `research` (Day 1 work, tracks `origin/research`)
-- **Day 1 PR**: https://github.com/DaiSwap/nefarious/pull/1 (open)
-- **Credential setup**: repo-local helper using `gh` (logged in as DaiSwap). Global git config + macOS Keychain (`peeveeee` setup) untouched. See `LEARNINGS.md` Part 8 for details.
-- **Daily push workflow**: see `LEARNINGS.md` §8.3. Standard `git add <files> / commit / push` from this folder works because the repo-local credential helper resolves to DaiSwap automatically.
+- **Remote**: https://github.com/DaiSwap/nefarious · `main` (squash-merge target) · `research` (rolling work branch)
+- **PRs #1–#6, #31 merged**. Issues **#7–#30 open** (repo-review backlog).
+- **Two-account rule**: `gh auth switch --user DaiSwap` before any push/PR/issue command. See RESUME.md appendix.
 
 ## Resume protocol
-
-If context is cleared mid-project, paste this prompt into a fresh Claude:
-
+Paste into a fresh Claude:
 ```
 Read /Users/pranavvenkatesh/analytics/nefarious/RESUME.md fully, then follow its §8 instructions. Do not skip steps. Reply only after reading all files in §2.
 ```
-
-`RESUME.md` lists the 8 files to read in priority order, current task state, immediate next step, working principles, the checkpoint protocol, and 5 named mistakes to avoid.
